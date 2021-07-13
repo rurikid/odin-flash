@@ -149,13 +149,38 @@ body {
   border: 1px solid var(--top);
 }
 
+.card-spread {
+  width: calc(var(--cardWidth) * 5);
+  flex-wrap:wrap;
+}
+
+.prompt-card {
+  height: var(--cardHeight);
+  width: calc((var(--cardWidth) * 5) - (4 * 6px));
+  background-color: var(--top);
+  margin: 3px;
+  padding: 3px;
+  clip-path: polygon(0 25%, 10% 0, 100% 0, 100% 75%, 90% 100%, 0 100%);
+}
+
+.prompt-face {
+  height: 100%;
+  width: 100%;
+  background-color: var(--londonSquare);
+  font-family: 'Nova Cut';
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--blackPearl);
+  opacity: 100%;
+  clip-path: polygon(0 25%, 10% 0, 100% 0, 100% 75%, 90% 100%, 0 100%);
+}
+
 .card {
   margin: 3px;
   padding: 3px;
   height: var(--cardHeight);
   width: var(--cardWidth);
   background-color: var(--top);
-  /* opacity: 90%; */
   clip-path: polygon(0 20%, 20% 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
 }
 
@@ -166,8 +191,7 @@ body {
   font-family: 'Nova Cut';
   font-size: 32px;
   font-weight: bold;
-  color: var(--black);
-  opacity: 100%;
+  color: var(--blackPearl);
   clip-path: polygon(0 20%, 20% 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
 }
 
