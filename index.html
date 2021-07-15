@@ -9,98 +9,282 @@
     <title>Odin Flash</title>
   </head>
   <header>
-    Odin Flash
   </header>
-  <body>
+  <body class="flex-center flex-column">
 
     <div class="flex-center game-canvas" id="gameCanvas">
-      <div class="flex-center flex-column gameplay-screen" id="gameplayScreen">
-        <div class="prompt-card">
-          <div class="flex-center prompt-face">
-            Factors of 2
+      <div class="flex-center flex-row gameplay-screen" id="gameplayScreen">
+
+        <div class="flex-center flex-row player-one" id="playerOne">
+          <div class="flex-center flex-column" id="gameSpread">
+            <div class="prompt-card">
+              <div class="flex-center prompt-face" id="gamePrompt">
+                Factors of 16
+              </div>
+            </div>
+            <div class="flex-center flex-row card-spread" id="cardSpread">
+              <div class="card">
+                <div class="flex-center card-face">
+                  2
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  8
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-back">
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  21
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  7
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  216
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-back">
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  8
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  16
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  216
+                </div>
+              </div>
+              <div class="card targeted">
+                <div class="flex-center card-back">
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  5
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  16
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  32
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-back">
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  16
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex-center flex-column status-panel" id="statusPanel">
+            <div class="flex-center flex-column game-status">
+              <h1>Score</h1>
+              <p>300000</p>
+            </div>
+            <div class="flex-column on-deck-decks">
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="flex-center flex-row card-spread">
-          <div class="card">
-            <div class="flex-center card-face">
-              16
+
+        <div class="flex-center flex-row player-two" id="playerTwo">
+          <div class="flex-center flex-column status-panel" id="statusPanel">
+            <div class="flex-center flex-column game-status">
+              <h1>Score</h1>
+              <p>216000</p>
+            </div>
+            <div class="flex-column on-deck-decks">
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
+              <div class="card on-deck-deck">
+                <div class="card-back">
+    
+                </div>
+              </div>
             </div>
           </div>
-          <div class="card targeted">
-            <div class="flex-center card-face">
-              216
+          <div class="flex-center flex-column" id="gameSpread">
+            <div class="prompt-card">
+              <div class="flex-center prompt-face" id="gamePrompt">
+                Divisible by 2
+              </div>
             </div>
-          </div>
-          <div class="card">
-            <div class="flex-center card-back">
-            </div>
-          </div>
-          <div class="card">
-            <div class="flex-center card-face">
-              16
-            </div>
-          </div>
-          <div class="card">
-            <div class="flex-center card-face">
-              16
-            </div>
-          </div>
-          <div class="card">
-            <div class="flex-center card-face">
-              216
-            </div>
-          </div>
-          <div class="card">
-            <div class="flex-center card-back">
-            </div>
-          </div>
-          <div class="card">
-            <div class="flex-center card-face">
-              16
-            </div>
-          </div>
-          <div class="card">
-            <div class="flex-center card-face">
-              16
-            </div>
-          </div>
-          <div class="card">
-            <div class="flex-center card-face">
-              216
-            </div>
-          </div>
-          <div class="card targeted">
-            <div class="flex-center card-back">
-            </div>
-          </div>
-          <div class="card">
-            <div class="flex-center card-face">
-              16
-            </div>
-          </div>
-          <div class="card">
-            <div class="flex-center card-face">
-              16
-            </div>
-          </div>
-          <div class="card">
-            <div class="flex-center card-face">
-              216
-            </div>
-          </div>
-          <div class="card">
-            <div class="flex-center card-back">
-            </div>
-          </div>
-          <div class="card">
-            <div class="flex-center card-face">
-              16
+            <div class="flex-center flex-row card-spread" id="cardSpread">
+              <div class="card">
+                <div class="flex-center card-face">
+                  21
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  16
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-back">
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-back">
+                  8
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  42
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  512
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-back">
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  3
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  1
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  75
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-back">
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  55
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  41
+                </div>
+              </div>
+              <div class="card targeted">
+                <div class="flex-center card-face">
+                  216
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-back">
+                </div>
+              </div>
+              <div class="card">
+                <div class="flex-center card-face">
+                  16
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
-
+<!-- 
     <div class="flex-center game-canvas" id="gameCanvas">
       <div class="settings-screen" id="settingsScreen">
 
@@ -243,7 +427,7 @@
         <h1>Odin Flash</h1>
         <h2>Press Any Button To Continue</h2>
       </div>
-    </div>
+    </div> -->
 
   </body>
   <footer>

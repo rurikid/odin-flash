@@ -43,20 +43,15 @@
   --cardWidth: 60px;
 }
 
-
-
 html {
   background-color: var(--blackPearl);
   color: var(--hintOfElusiveBlue);
   height: 100%;
   width: 100%;
+  display: flex;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-items: center;
   width: 100%;
 }
 
@@ -198,9 +193,8 @@ body {
 .card-back {
   height: 100%;
   width: 100%;
-  background-color: var(--londonSquare);
-
-  opacity: 25%;
+  background-color: var(--top);
+  filter: brightness(80%);
   clip-path: polygon(0 20%, 20% 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
 }
 
@@ -218,6 +212,32 @@ body {
   100% {
     background-color: var(--spiroDiscoBall);
   }
+}
+
+.player-two {
+  margin-left: 3px;
+}
+
+.status-panel {
+  height: calc((var(--cardHeight) + 10px) * 5);
+  border: 3px solid var(--top);
+  justify-content: space-between;
+}
+
+.game-status {
+  border-bottom: 3px solid var(--top);
+  width: 100%;
+  font-family: 'Nova Cut';
+  font-size: 16px;
+}
+
+.game-status h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.on-deck-deck {
+  margin-top: -60px;
 }
 
 footer {
