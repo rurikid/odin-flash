@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Nova+Cut&display=swap');
+
+/* :root {
+  --red: #d80000;
+  --black: #161616;
+  --violet: #5B3758;
+  --gray: #C2B2B4;
+  --white: #D8D8D8;
+  --top: #CC9543;
+  --canvasHeight: 768px;
+  --canvasWidth: 1024px;
+  --cardHeight: 60px;
+  --cardWidth: 60px;
+} */
+
+:root {
+  --highlighterPink: #ef5777;
+  --sizzlingRed: #f53b57;
+  --darkPeriwinkle: #575fcf;
+  --freeSpeechBlue: #3c40c6;
+  --megaman: #4bcffa;
+  --spiroDiscoBall: #0fbcf9;
+  --freshTurquoise: #34e7e4;
+  --jadeDust: #00d8d6;
+  --mintyGreen: #0be881;
+  --greenTeal: #05c46b;
+  --narenjiOrange: #ffc048;
+  --chromeYellow: #ffa801;
+  --yrielYellow: #ffdd59;
+  --vibrantYellow: #ffd32a;
+  --sunsetOrange: #ff5e57;
+  --redOrange: #ff3f34;
+  --hintOfElusiveBlue: #d2dae2;
+  --londonSquare: #808e9b;
+  --goodNight: #485460;
+  --blackPearl: #1e272e;
+  --top: #CC9543;
+  --red: #d80000;
+
+  --canvasHeight: 768px;
+  --canvasWidth: 1024px;
+  --cardHeight: 60px;
+  --cardWidth: 60px;
+}
+
+html {
+  background-color: var(--blackPearl);
+  color: var(--hintOfElusiveBlue);
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+body {
+  width: 100%;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+.game-canvas {
+  height: var(--canvasHeight);
+  width: var(--canvasWidth);
+  background-color: var(--black);
+  color: var(--hintOfElusiveBlue);
+  border: 1px solid var(--top);
+  margin: 5px 0px 5px 0px;
+}
+
+.title-screen h1 {
+  font-size: 128px;
+  font-family: 'Nova Cut';
+  color: var(--top);
+}
+
+.title-screen h2 {
+  font-size: 16px;
+  margin-top: 32px;
+  animation: blinking 1.5s linear infinite;
+}
+
+@keyframes blinking {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.main-menu-screen {
+  font-family: 'Nova Cut';
+  color: var(--top);
+}
+
+.main-menu-screen h1 {
+  font-size: 64px;
+}
+
+.main-menu-screen h2 {
+  font-size: 32px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.main-menu-screen label {
+  font-size: 24px;
+  padding: 5px;
+}
+
+.main-menu-screen label:hover {
+  cursor: pointer;
+}
+
+.main-menu-screen input[type="submit"] {
+  margin-top: 16px;
+}
+
+.main-menu-screen input[type="radio"] {
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.main-menu-screen input[type="radio"]:checked + label {
+  border: 1px solid var(--top);
+}
+
+.card-spread {
+  width: calc(var(--cardWidth) * 5);
+  flex-wrap:wrap;
+}
+
+.prompt-card {
+  height: var(--cardHeight);
+  width: calc((var(--cardWidth) * 5) - (4 * 6px));
+  background-color: var(--top);
+  margin: 3px;
+  padding: 3px;
+  clip-path: polygon(0 25%, 10% 0, 100% 0, 100% 75%, 90% 100%, 0 100%);
+}
+
+.prompt-face {
+  height: 100%;
+  width: 100%;
+  background-color: var(--londonSquare);
+  font-family: 'Nova Cut';
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--blackPearl);
+  opacity: 100%;
+  clip-path: polygon(0 25%, 10% 0, 100% 0, 100% 75%, 90% 100%, 0 100%);
+}
+
+.card {
+  margin: 3px;
+  padding: 3px;
+  height: var(--cardHeight);
+  width: var(--cardWidth);
+  background-color: var(--top);
+  clip-path: polygon(0 20%, 20% 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+}
+
+.card-face {
+  height: 100%;
+  width: 100%;
+  background-color: var(--londonSquare);
+  font-family: 'Nova Cut';
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--blackPearl);
+  clip-path: polygon(0 20%, 20% 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+}
+
+.card-back {
+  height: 100%;
+  width: 100%;
+  background-color: var(--top);
+  filter: brightness(80%);
+  clip-path: polygon(0 20%, 20% 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+}
+
+.targeted {
+  animation: targeting .5s linear infinite;
+}
+
+@keyframes targeting {
+  0% {
+    background-color: var(--hintOfElusiveBlue);
+  }
+  50% {
+    background-color: var(--megaman);
+  }
+  100% {
+    background-color: var(--spiroDiscoBall);
+  }
+}
+
+.player-two {
+  margin-left: 3px;
+}
+
+.status-panel {
+  height: calc((var(--cardHeight) + 10px) * 5);
+  border: 3px solid var(--top);
+  justify-content: space-between;
+}
+
+.game-status {
+  border-bottom: 3px solid var(--top);
+  width: 100%;
+  font-family: 'Nova Cut';
+  font-size: 16px;
+}
+
+.game-status h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.on-deck-deck {
+  margin-top: -60px;
+}
+
+footer {
+  color: var(--black);
+}
+
+footer a {
+  color: var(--black);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--red);
+}
+
+.o-slash {
+  color: var(--red);
+}
+
+.top:hover {
+  color: var(--top);
+}
