@@ -1,3 +1,6 @@
+import { GameConstants, GameState } from "../GameState.js";
+import { ControlConstants } from "../Controls.js";
+
 const GameplayStyles = {
   promptBase: "prompt-card",
   promptFace: "flex-center prompt-face",
@@ -81,8 +84,10 @@ const cardSpread = () => {
   cardSpread.id = GameplayIDs.cardSpread;
 
   for (let i = 0; i < 16; i++) {
-    cardSpread.appendChild(gameCard('', GameplayStyles.cardBase, GameplayStyles.cardBack));
+    cardSpread.appendChild(gameCard('4', GameplayStyles.cardBase, GameplayStyles.cardFace));
   }
+
+  cardSpread.children[15].className += " targeted";
 
   return cardSpread;
 }
@@ -96,7 +101,7 @@ const gameCard = (value, baseStyle, faceStyle) => {
   cardFace.innerHTML = value;
 
   gameCard.appendChild(cardFace);
-  
+
   return gameCard;
 }
 
@@ -125,7 +130,7 @@ const onDeck = () => {
   onDeck.id = GameplayIDs.onDeckDecks;
 
   onDeck.appendChild(
-    gameCard('', GameplayStyles.onDeckBase, GameplayStyles.onDeckBack));  
+    gameCard('', GameplayStyles.onDeckBase, GameplayStyles.onDeckBack));
 
   return onDeck;
 }
@@ -138,4 +143,40 @@ const dropOnDeck = (player) => {
 
 }
 
-export { GameplayStyles, gameplayScreen };
+const SetGameplayTarget = (player, direction) => {
+  let cardSpread = document.getElementById(
+    player === GameConstants.PlayerOne ? GameplayIDs.playerOne : GameplayIDs.playerTwo)
+    .querySelector("#" + GameplayIDs.gameSpread)
+    .querySelector("#" + GameplayIDs.cardSpread);
+
+  console.log(cardSpread);
+
+  if (player === GameConstants.PlayerOne)
+  {
+    let currentIndex = GameState.PlayerOne.TargetIndex;
+    let newIndex = findNewTargetIndex(GameState.PlayerOne.TargetIndex - 1, direction);
+    console.log(cardSpread.children[GameState.PlayerOne.TargetIndex - 1]);
+    cardSpread.children[currentIndex - 1].className.replace(" targeted", "");
+    cardSpread.children[newIndex].className += " targeted";
+    GameState.PlayerOne.TargetIndex = newIndex;
+  }
+}
+
+const setNewTargetIndex = (element, index, direction) => {
+
+}
+
+const findNewTargetIndex = (index, direction) => {
+  switch (direction) {
+    case ControlConstants.Up:
+      return index - 4 < 0 ? index : index - 4;
+    case ControlConstants.Down:
+      return index + 4 > 15 ? index : index + 4;
+    case ControlConstants.Left:
+      return index % 4 === 0 ? index : index - 1;
+    case ControlConstants.Right:
+      return (index + 1) % 4 === 0 ? index : index + 1;
+  }
+}
+
+export { GameplayStyles, gameplayScreen, SetGameplayTarget};
