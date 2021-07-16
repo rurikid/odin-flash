@@ -43,7 +43,7 @@ let GameState = {
     OnDeckCount: 5,
     CurrentPrompt: "Factors of 16",
     CurrentSpread: [0, 1, 3, 4, 14, 15, 17, 73, 84, 23, 15, 123, 34, 45, 67, 89],
-    TargetIndex: 16,
+    TargetIndex: 15,
     IncorrectTime: -1,
   },
   PlayerTwo: {
@@ -52,7 +52,7 @@ let GameState = {
     OnDeckCount: 5,
     CurrentPrompt: "Multiples of 16",
     CurrentSpread: [0, 1, 3, 4, 14, 15, 17, 73, 84, 23, 15, 123, 34, 45, 67, 89],
-    TargetIndex: 16,
+    TargetIndex: 15,
     IncorrectTime: -1,
   }
 };

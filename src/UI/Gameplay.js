@@ -149,16 +149,21 @@ const SetGameplayTarget = (player, direction) => {
     .querySelector("#" + GameplayIDs.gameSpread)
     .querySelector("#" + GameplayIDs.cardSpread);
 
-  console.log(cardSpread);
-
   if (player === GameConstants.PlayerOne)
   {
     let currentIndex = GameState.PlayerOne.TargetIndex;
-    let newIndex = findNewTargetIndex(GameState.PlayerOne.TargetIndex - 1, direction);
-    console.log(cardSpread.children[GameState.PlayerOne.TargetIndex - 1]);
-    cardSpread.children[currentIndex - 1].className.replace(" targeted", "");
+    let newIndex = findNewTargetIndex(GameState.PlayerOne.TargetIndex, direction);
+    cardSpread.children[currentIndex].className = cardSpread.children[currentIndex].className.replace(" targeted", "");
     cardSpread.children[newIndex].className += " targeted";
     GameState.PlayerOne.TargetIndex = newIndex;
+  }
+  else if (player === GameConstants.PlayerTwo)
+  {
+    let currentIndex = GameState.PlayerTwo.TargetIndex;
+    let newIndex = findNewTargetIndex(GameState.PlayerTwo.TargetIndex, direction);
+    cardSpread.children[currentIndex].className = cardSpread.children[currentIndex].className.replace(" targeted", "");
+    cardSpread.children[newIndex].className += " targeted";
+    GameState.PlayerTwo.TargetIndex = newIndex;
   }
 }
 

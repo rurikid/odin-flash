@@ -10,77 +10,52 @@ const ControlConstants = {
 }
 
 const initControls = () => {
-  console.log('Hello Odin!');
-  document.addEventListener('keyup', (e) => {
+  document.addEventListener('keydown', (e) => {
     console.log(e.code);
     switch (e.code) {
       case "ArrowUp":
-        TargetUp(GameConstants.PlayerOne);
+        SetTarget(GameConstants.PlayerOne, ControlConstants.Up);
         break;
       case "ArrowDown":
-        TargetDown(GameConstants.PlayerOne);
+        SetTarget(GameConstants.PlayerOne, ControlConstants.Down);
         break;
       case "ArrowLeft":
-        TargetLeft(GameConstants.PlayerOne);
+        SetTarget(GameConstants.PlayerOne, ControlConstants.Left);
         break;
       case "ArrowRight":
-        TargetRight(GameConstants.PlayerOne);
+        SetTarget(GameConstants.PlayerOne, ControlConstants.Right);
         break;
       case "Enter":
-        TargetSelect(GameConstants.PlayerOne);
+        SelectTarget(GameConstants.PlayerOne, ControlConstants.Select);
       case "KeyW":
-        TargetUp(GameConstants.PlayerTwo);
+        SetTarget(GameConstants.PlayerTwo, ControlConstants.Up);
         break;
       case "KeyS":
-        TargetDown(GameConstants.PlayerTwo);
+        SetTarget(GameConstants.PlayerTwo, ControlConstants.Down);
         break;
       case "KeyA":
-        TargetLeft(GameConstants.PlayerTwo);
+        SetTarget(GameConstants.PlayerTwo, ControlConstants.Left);
         break;
       case "KeyD":
-        TargetRight(GameConstants.PlayerTwo);
+        SetTarget(GameConstants.PlayerTwo, ControlConstants.Right);
         break;
       case "Space":
-        TargetSelect(GameConstants.PlayerTwo);
+        SelectTarget(GameConstants.PlayerTwo, ControlConstants.Select);
         break;
     }
   });
 }
 
-const TargetUp = (player) => {
+const SetTarget = (player, direction) => {
   switch (GameState.CurrentScreen)
   {
     case GameConstants.CurrentScreen.Gameplay:
-      SetGameplayTarget(player, ControlConstants.Up);
+      SetGameplayTarget(player, direction);
       break;
   }
 }
 
-const TargetDown = (player) => {
-  switch (GameState.CurrentScreen)
-  {
-    case GameConstants.CurrentScreen.Gameplay:
-      break;
-  }
-}
-
-const TargetLeft = (player) => {
-  switch (GameState.CurrentScreen)
-  {
-    case GameConstants.CurrentScreen.Gameplay:
-      break;
-  }
-}
-
-const TargetRight = (player) => {
-  switch (GameState.CurrentScreen)
-  {
-    case GameConstants.CurrentScreen.Gameplay:
-      break;
-  }
-}
-
-const TargetSelect = (player) => {
+const SelectTarget = (player) => {
   switch (GameState.CurrentScreen)
   {
     case GameConstants.CurrentScreen.Gameplay:
