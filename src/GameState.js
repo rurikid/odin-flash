@@ -1,8 +1,8 @@
 import { DeckFactory, DeckTypes } from "./DeckFactory/DeckFactory.js";
 
 const GameConstants = {
-  PlayerOne: "PlayerOne",
-  PlayerTwo: "PlayerTwo",
+  PlayerOne: 0,
+  PlayerTwo: 1,
   CurrentScreen: {
     Title: "Title",
     Gameplay: "Gameplay",
@@ -23,7 +23,31 @@ const GameConstants = {
     Thirty: 30,
     Sixty: 60,
     Ninety: 90
+  },
+  StartingDecks: {
+    Three: 3,
+    Five: 5,
+    Seven: 7,
+    Ten: 10
+  },
+  Difficulty: {
+    Beginner: "Beginner",
+    Intermediate: "Intermediate",
+    Advanced: "Advanced",
+    Expert: "Expert"
   }
+}
+
+const Player = () => {
+  return {
+    Score: 0,
+    Lives: 9,
+    CurrentDeckIndex: 0,
+    CurrentRemainingCorrect: 8,
+    PerfectSpread: true,
+    TargetIndex: 15,
+    IncorrectTime: -1,
+  };
 }
 
 let GameState = {
@@ -38,26 +62,12 @@ let GameState = {
     SecondPlayer: GameConstants.SecondPlayer.Human,
     StartingLives: GameConstants.StartingLives.Seven,
     StartingTimer: GameConstants.StartingTimer.Ninety,
-    DeckSelection: [DeckTypes.Factors],
+    StartingDecks: GameConstants.StartingDecks.Five,
+    SelectedDecks: [DeckTypes.Factors],
+    Difficulty: GameConstants.Difficulty.Beginner,
   },
-  PlayerOne: {
-    Score: 0,
-    Lives: 9,
-    OnDeckCount: 5,
-    CurrentPrompt: "Factors of 16",
-    CurrentSpread: [0, 1, 3, 4, 14, 15, 17, 73, 84, 23, 15, 123, 34, 45, 67, 89],
-    TargetIndex: 15,
-    IncorrectTime: -1,
-  },
-  PlayerTwo: {
-    Score: 0,
-    Lives: 9,
-    OnDeckCount: 5,
-    CurrentPrompt: "Multiples of 16",
-    CurrentSpread: [0, 1, 3, 4, 14, 15, 17, 73, 84, 23, 15, 123, 34, 45, 67, 89],
-    TargetIndex: 15,
-    IncorrectTime: -1,
-  }
+  OnDeck: [],
+  Players: [Player(), Player()],
 };
 
 export { GameState, GameConstants };

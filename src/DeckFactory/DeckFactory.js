@@ -1,4 +1,4 @@
-import { GameState } from "../GameState.js";
+import { GetFactorSpread } from "./Factors.js";
 
 const DeckTypes = {
   Antonyms: "Antonyms",
@@ -17,19 +17,20 @@ const Difficulties = {
   Expert: "Expert"
 }
 
-const DeckFactory = () => {
-  let deckType = GameState.GameOptions.DeckSelection[
-    Math.floor(Math.random() * GameState.GameOptions.DeckSelection.length) + 1];
+const DeckFactory = (selectedDecks, difficulty, count) => {
+  let decks = [];
 
-  let deck;
+  for (let i = 0; i < count; i++) {
+    let deckType = selectedDecks[
+      Math.floor(Math.random() * selectedDecks.length)];
 
-  switch (deckType) {
-    case DeckNames.Factors:
-      deck = GetFactorSpread();
-      break;
+    switch (deckType) {
+      case DeckTypes.Factors:
+        decks.push(GetFactorSpread());
+    }
   }
 
-  return deck;
+  return decks;
 }
 
 export { DeckTypes, DeckFactory };
