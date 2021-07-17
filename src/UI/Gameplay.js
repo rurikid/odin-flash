@@ -28,6 +28,7 @@ const GameplayIDs = {
   cardSpread: "cardSpread",
   statusPanel: "statusPanel",
   onDeckDecks: "onDeckDecks",
+  targeted: "targeted"
 }
 
 const gameplayScreen = (players) => 
@@ -105,10 +106,6 @@ const gameCard = (value, baseStyle, faceStyle) => {
   return gameCard;
 }
 
-const setGameCard = (player, index, value, baseStyle, faceStyle) => {
-
-}
-
 const statusPanel = () => {
   let statusPanel = document.createElement('div');
   statusPanel.className = GameplayStyles.statusPanel;
@@ -143,32 +140,41 @@ const dropOnDeck = (player) => {
 
 }
 
+const GetGameplayTarget = (player) => {
+  return document.getElementById(
+    player === GameConstants.PlayerOne ? GameplayIDs.playerOne : GameplayIDs.playerTwo)
+    .querySelector("#" + GameplayIDs.gameSpread)
+    .querySelector("#" + GameplayIDs.cardSpread)
+    .children[player === GameConstants.PlayerOne ? 
+      GameState.PlayerOne.TargetIndex : GameState.PlayerTwo.TargetIndex];
+}
+
 const SetGameplayTarget = (player, direction) => {
   let cardSpread = document.getElementById(
     player === GameConstants.PlayerOne ? GameplayIDs.playerOne : GameplayIDs.playerTwo)
     .querySelector("#" + GameplayIDs.gameSpread)
     .querySelector("#" + GameplayIDs.cardSpread);
 
+  let currentIndex = -1;
+  let newIndex = -1;
+
   if (player === GameConstants.PlayerOne)
   {
-    let currentIndex = GameState.PlayerOne.TargetIndex;
-    let newIndex = findNewTargetIndex(GameState.PlayerOne.TargetIndex, direction);
-    cardSpread.children[currentIndex].className = cardSpread.children[currentIndex].className.replace(" targeted", "");
-    cardSpread.children[newIndex].className += " targeted";
+    currentIndex = GameState.PlayerOne.TargetIndex;
+    newIndex = findNewTargetIndex(GameState.PlayerOne.TargetIndex, direction);
     GameState.PlayerOne.TargetIndex = newIndex;
   }
   else if (player === GameConstants.PlayerTwo)
   {
-    let currentIndex = GameState.PlayerTwo.TargetIndex;
-    let newIndex = findNewTargetIndex(GameState.PlayerTwo.TargetIndex, direction);
-    cardSpread.children[currentIndex].className = cardSpread.children[currentIndex].className.replace(" targeted", "");
-    cardSpread.children[newIndex].className += " targeted";
+    currentIndex = GameState.PlayerTwo.TargetIndex;
+    newIndex = findNewTargetIndex(GameState.PlayerTwo.TargetIndex, direction);
     GameState.PlayerTwo.TargetIndex = newIndex;
   }
-}
 
-const setNewTargetIndex = (element, index, direction) => {
-
+  cardSpread.children[currentIndex].className = cardSpread.children[currentIndex].className.replace(" targeted", "");
+  cardSpread.children[currentIndex].removeAttribute('id');
+  cardSpread.children[newIndex].className += " targeted";
+  cardSpread.children[newIndex].id = GameplayIDs.targeted;
 }
 
 const findNewTargetIndex = (index, direction) => {
@@ -184,4 +190,25 @@ const findNewTargetIndex = (index, direction) => {
   }
 }
 
-export { GameplayStyles, gameplayScreen, SetGameplayTarget};
+const SelectGameplayTarget = (player) => {
+  let selection = GetGameplayTarget(player);
+
+  // validate selection
+
+  // validate card
+
+  // flip card
+  console.log(selection);
+  selection.children[0].className = GameplayStyles.cardBack;
+  selection.children[0].innerHTML = "";
+
+  // validate spread
+}
+
+
+
+const setGameCard = (player, index, value, baseStyle, faceStyle) => {
+
+}
+
+export { GameplayStyles, gameplayScreen, SetGameplayTarget, SelectGameplayTarget };

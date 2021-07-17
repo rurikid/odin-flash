@@ -1,3 +1,5 @@
+import { DeckFactory, DeckTypes } from "./DeckFactory/DeckFactory.js";
+
 const GameConstants = {
   PlayerOne: "PlayerOne",
   PlayerTwo: "PlayerTwo",
@@ -35,7 +37,8 @@ let GameState = {
     GameMode: GameConstants.GameMode.TwoPlayer,
     SecondPlayer: GameConstants.SecondPlayer.Human,
     StartingLives: GameConstants.StartingLives.Seven,
-    StartingTimer: GameConstants.StartingTimer.Ninety
+    StartingTimer: GameConstants.StartingTimer.Ninety,
+    DeckSelection: [DeckTypes.Factors],
   },
   PlayerOne: {
     Score: 0,
@@ -56,6 +59,5 @@ let GameState = {
     IncorrectTime: -1,
   }
 };
-
 
 export { GameState, GameConstants };

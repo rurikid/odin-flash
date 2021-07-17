@@ -1,5 +1,5 @@
 import { GameState, GameConstants } from "./GameState.js";
-import { SetGameplayTarget } from "./UI/Gameplay.js";
+import { SetGameplayTarget, SelectGameplayTarget } from "./UI/Gameplay.js";
 
 const ControlConstants = {
   Up: "Up",
@@ -11,8 +11,7 @@ const ControlConstants = {
 
 const initControls = () => {
   document.addEventListener('keydown', (e) => {
-    console.log(e.code);
-    switch (e.code) {
+     switch (e.code) {
       case "ArrowUp":
         SetTarget(GameConstants.PlayerOne, ControlConstants.Up);
         break;
@@ -27,6 +26,7 @@ const initControls = () => {
         break;
       case "Enter":
         SelectTarget(GameConstants.PlayerOne, ControlConstants.Select);
+        break;
       case "KeyW":
         SetTarget(GameConstants.PlayerTwo, ControlConstants.Up);
         break;
@@ -59,6 +59,7 @@ const SelectTarget = (player) => {
   switch (GameState.CurrentScreen)
   {
     case GameConstants.CurrentScreen.Gameplay:
+      SelectGameplayTarget(player);
       break;
   }
 }
