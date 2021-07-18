@@ -202,6 +202,10 @@ body {
   animation: targeting .5s linear infinite;
 }
 
+.incorrect {
+  animation: incorrect .5s linear infinite;
+}
+
 @keyframes targeting {
   0% {
     background-color: var(--hintOfElusiveBlue);
@@ -211,6 +215,18 @@ body {
   }
   100% {
     background-color: var(--spiroDiscoBall);
+  }
+}
+
+@keyframes incorrect {
+  0% {
+    background-color: var(--hintOfElusiveBlue);
+  }
+  50% {
+    background-color: var(--sunsetOrange);
+  }
+  100% {
+    background-color: var(--redOrange);
   }
 }
 
