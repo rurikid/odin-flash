@@ -17,6 +17,8 @@ const Difficulties = {
   Expert: "Expert"
 }
 
+// TODO: implement difficulties
+// TODO: add number of correct property
 const DeckFactory = (selectedDecks, difficulty, count) => {
   let decks = [];
 

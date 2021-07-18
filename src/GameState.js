@@ -46,8 +46,8 @@ const Player = () => {
     CurrentRemainingCorrect: 8,
     OnDeckCount: 5,
     PerfectSpread: true,
+    TimedOut: false,
     TargetIndex: 15,
-    IncorrectTime: -1,
   };
 }
 

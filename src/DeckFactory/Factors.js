@@ -12,34 +12,46 @@ const getAnswers = (promptValue) => {
   return { Correct: correct, Incorrect: incorrect };
 }
 
-const buildCardSpread = (promptValue) => {
-  let answers = getAnswers(promptValue);
+const buildCardSpread = (answers) => {
   let cardSpread = [];
 
   if (answers.Correct.length <= 8) {
     cardSpread.push(...answers.Correct);
   }
 
-  let cards = [...answers.Correct];
-  for (let i = cardSpread.length; i < 8; i++) {
-    let index = Math.floor(Math.random() * cards.length);
-    cardSpread.push(cards[index]);
-    cards = cards.splice(index, 1);
+  let correct = [...answers.Correct];
+  while (cardSpread.length < 8) {
+    let index = Math.floor(Math.random() * correct.length);
+    cardSpread.push(correct[index]);
+    correct.splice(index, 1);
   }
-  cards = [...answers.Incorrect]
-  for (let i = cardSpread.length; i < 16; i++) {
-    let index = Math.floor(Math.random() * cards.length);
-    cardSpread.push(cards[index]);
-    cards = cards.splice(index, 1);
+
+  if (answers.Incorrect.length <= 8) {
+    cardSpread.push(...answers.Incorrect);
   }
-  console.log(cardSpread);
+
+  while (cardSpread.length < 16) {
+    let incorrect = [...answers.Incorrect];
+    while (incorrect.length > 0 &&
+           cardSpread.length < 16) {
+      let index = Math.floor(Math.random() * incorrect.length);
+      cardSpread.push(incorrect[index]);
+      incorrect.splice(index, 1);
+    }
+  }
 
   return cardSpread;
 }
 
 const GetFactorSpread = (difficulty) => {
   let promptValue = Math.floor(Math.random() * 100) + 1;
-  let cardSpread = buildCardSpread(promptValue);
+  let answers = getAnswers(promptValue);
+
+  if (answers.Correct.length <= 3) {
+    return GetFactorSpread(difficulty);
+  }
+
+  let cardSpread = buildCardSpread(answers);
 
   let factorSpread = {
     PromptValue: promptValue,

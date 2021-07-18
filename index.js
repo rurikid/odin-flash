@@ -6,11 +6,15 @@ import { DeckFactory } from "./src/DeckFactory/DeckFactory.js";
 console.log('Hello Odin!');
 
 initControls();
+
+// TODO: init with game title
+
+// TODO: More elegant way to deal with starting decks/ondeck
 GameState.OnDeck = DeckFactory(GameState.GameOptions.SelectedDecks,
                                GameState.GameOptions.Difficulty,
                                GameState.GameOptions.StartingDecks + 1);
 
 let gameCanvas = document.getElementById('gameCanvas');
-console.log(GameState.OnDeck);
+
 gameCanvas.appendChild(
   gameplayScreen(GameState.CurrentPlayers, GameState.OnDeck));
