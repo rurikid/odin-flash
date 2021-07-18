@@ -15,12 +15,25 @@ const getAnswers = (promptValue) => {
 const buildCardSpread = (promptValue) => {
   let answers = getAnswers(promptValue);
   let cardSpread = [];
-  for (let i = 0; i < 8; i++) {
-    cardSpread.push(Math.floor(Math.random() * answers.Correct.length) + 1);
+
+  if (answers.Correct.length <= 8) {
+    cardSpread.push(...answers.Correct);
   }
-  for (let i = 0; i < 8; i++) {
-    cardSpread.push(Math.floor(Math.random() * answers.Incorrect.length) + 1);
+
+  let cards = [...answers.Correct];
+  for (let i = cardSpread.length; i < 8; i++) {
+    let index = Math.floor(Math.random() * cards.length);
+    cardSpread.push(cards[index]);
+    cards = cards.splice(index, 1);
   }
+  cards = [...answers.Incorrect]
+  for (let i = cardSpread.length; i < 16; i++) {
+    let index = Math.floor(Math.random() * cards.length);
+    cardSpread.push(cards[index]);
+    cards = cards.splice(index, 1);
+  }
+  console.log(cardSpread);
+
   return cardSpread;
 }
 

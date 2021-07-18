@@ -81,6 +81,7 @@ const gameSpread = (onDeck) => {
 }
 
 const cardSpread = (cardValues) => {
+  console.log(cardValues.CardSpread);
   let cardSpread = document.createElement("div");
   cardSpread.className = GameplayStyles.cardSpread;
   cardSpread.id = GameplayIDs.cardSpread;
@@ -194,8 +195,7 @@ const SelectGameplayTarget = (player) => {
 
     if (GameState.Players[player].CurrentRemainingCorrect === 0)
     {
-      if (GameState.Players[player].CurrentDeckIndex ===
-          GameState.OnDeck.length)
+      if (GameState.Players[player].OnDeckCount === 0)
       {
         // game over?
       }

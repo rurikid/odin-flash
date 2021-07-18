@@ -11,5 +11,6 @@ GameState.OnDeck = DeckFactory(GameState.GameOptions.SelectedDecks,
                                GameState.GameOptions.StartingDecks + 1);
 
 let gameCanvas = document.getElementById('gameCanvas');
+console.log(GameState.OnDeck);
 gameCanvas.appendChild(
   gameplayScreen(GameState.CurrentPlayers, GameState.OnDeck));

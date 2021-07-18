@@ -44,6 +44,7 @@ const Player = () => {
     Lives: 9,
     CurrentDeckIndex: 0,
     CurrentRemainingCorrect: 8,
+    OnDeckCount: 5,
     PerfectSpread: true,
     TargetIndex: 15,
     IncorrectTime: -1,
