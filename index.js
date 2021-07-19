@@ -37,6 +37,6 @@ const ScreenChange = (screen) => {
 
 InitControls();
 
-ScreenChange(GameConstants.CurrentScreen.Title);
+// ScreenChange(GameConstants.CurrentScreen.Title);
 
 export { ScreenChange };

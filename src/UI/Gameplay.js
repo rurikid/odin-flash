@@ -252,6 +252,7 @@ const IncrementSpread = (player) => {
 
   let playerGame = getPlayerGame(player);
 
+  // TODO: Current remaining might depend on the deck
   GameState.Players[player].CurrentRemainingCorrect = 8;
   GameState.Players[player].CurrentDeckIndex++;
   GameState.Players[player].PerfectSpread = true;

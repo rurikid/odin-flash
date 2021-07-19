@@ -1,18 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Nova+Cut&display=swap');
 
-/* :root {
-  --red: #d80000;
-  --black: #161616;
-  --violet: #5B3758;
-  --gray: #C2B2B4;
-  --white: #D8D8D8;
-  --top: #CC9543;
-  --canvasHeight: 768px;
-  --canvasWidth: 1024px;
-  --cardHeight: 60px;
-  --cardWidth: 60px;
-} */
-
 :root {
   --highlighterPink: #ef5777;
   --sizzlingRed: #f53b57;
@@ -42,7 +29,7 @@
   --cardHeight: 60px;
   --cardWidth: 60px;
 }
-
+/* TODO: Let's be honest everything is flex-center */
 html {
   background-color: var(--blackPearl);
   color: var(--hintOfElusiveBlue);
@@ -257,12 +244,53 @@ body {
   margin-top: -60px;
 }
 
-footer {
-  color: var(--black);
+.game-over-screen {
+  height: 100%;
+  width: 100%;
+  font-family: 'Nova Cut';
+}
+
+.game-over-screen h1 {
+  font-size: 64px;
+  color: var(--top);
+}
+
+.game-over-screen h2 {
+  font-size: 32px;
+}
+
+.player-stats {
+  margin-top: 25px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.player-results {
+  align-self: flex-start;
+}
+
+.prompt-list {
+  margin-top: 25px;
+}
+
+.player-results .prompt-card {
+  margin-top: -20px;
+}
+
+.player-results h2 {
+  color: var(--top);
+  margin-bottom: 5px;
+}
+
+.player-results h3 {
+  font-size: 24px;
+  margin-bottom: 5px;
 }
 
 footer a {
-  color: var(--black);
+  color: var(--hintOfElusiveBlue);
   text-decoration: none;
 }
 
