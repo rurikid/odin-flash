@@ -1,4 +1,5 @@
 import { GameState, GameConstants } from "./GameState.js";
+import { TitleControls } from "./UI/Title.js";
 import { SetGameplayTarget, SelectGameplayTarget } from "./UI/Gameplay.js";
 
 const ControlConstants = {
@@ -9,65 +10,56 @@ const ControlConstants = {
   Select: "Select"
 }
 
-const initControls = () => {
+const InitControls = () => {
   document.addEventListener('keydown', (e) => {
-     switch (e.code) {
-      case "ArrowUp":
-        SetTarget(GameConstants.PlayerTwo, ControlConstants.Up);
+    switch (GameState.CurrentScreen) {
+      case GameConstants.CurrentScreen.Title:
+        titleControls(e.code);
         break;
-      case "ArrowDown":
-        SetTarget(GameConstants.PlayerTwo, ControlConstants.Down);
-        break;
-      case "ArrowLeft":
-        SetTarget(GameConstants.PlayerTwo, ControlConstants.Left);
-        break;
-      case "ArrowRight":
-        SetTarget(GameConstants.PlayerTwo, ControlConstants.Right);
-        break;
-      case "Enter":
-        SelectTarget(GameConstants.PlayerTwo, ControlConstants.Select);
-        break;
-      case "KeyW":
-        SetTarget(GameConstants.PlayerOne, ControlConstants.Up);
-        break;
-      case "KeyS":
-        SetTarget(GameConstants.PlayerOne, ControlConstants.Down);
-        break;
-      case "KeyA":
-        SetTarget(GameConstants.PlayerOne, ControlConstants.Left);
-        break;
-      case "KeyD":
-        SetTarget(GameConstants.PlayerOne, ControlConstants.Right);
-        break;
-      case "Space":
-        SelectTarget(GameConstants.PlayerOne, ControlConstants.Select);
+      case GameConstants.CurrentScreen.Gameplay:
+        gameplayControls(e.code);
         break;
     }
   });
 }
 
-const SetTarget = (player, direction) => {
-  if (!GameState.Players[player].TimedOut)
-  {
-    switch (GameState.CurrentScreen)
-    {
-      case GameConstants.CurrentScreen.Gameplay:
-        SetGameplayTarget(player, direction);
-        break;
-    }
+const titleControls = (keystroke) => {
+  TitleControls(keystroke);
+}
+
+const gameplayControls = (keystroke) => {
+  switch (keystroke) {
+    case "ArrowUp":
+      SetGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Up);
+      break;
+    case "ArrowDown":
+      SetGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Down);
+      break;
+    case "ArrowLeft":
+      SetGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Left);
+      break;
+    case "ArrowRight":
+      SetGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Right);
+      break;
+    case "Enter":
+      SelectGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Select);
+      break;
+    case "KeyW":
+      SetGameplayTarget(GameConstants.PlayerOne, ControlConstants.Up);
+      break;
+    case "KeyS":
+      SetGameplayTarget(GameConstants.PlayerOne, ControlConstants.Down);
+      break;
+    case "KeyA":
+      SetGameplayTarget(GameConstants.PlayerOne, ControlConstants.Left);
+      break;
+    case "KeyD":
+      SetGameplayTarget(GameConstants.PlayerOne, ControlConstants.Right);
+      break;
+    case "Space":
+      SelectGameplayTarget(GameConstants.PlayerOne, ControlConstants.Select);
+      break;
   }
 }
 
-const SelectTarget = (player) => {
-  if (!GameState.Players[player].TimedOut)
-  {
-    switch (GameState.CurrentScreen)
-    {
-      case GameConstants.CurrentScreen.Gameplay:
-        SelectGameplayTarget(player);
-        break;
-    }
-  }
-}
-
-export { initControls, ControlConstants };
+export { InitControls, ControlConstants };
