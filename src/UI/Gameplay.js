@@ -35,7 +35,7 @@ const GameplayIDs = {
   targeted: "targeted"
 }
 
-const gameplayScreen = (players, onDeck) => 
+const GameplayScreen = (players, onDeck) => 
 {
   let gameplayScreen = document.createElement("div");
   gameplayScreen.className = GameplayStyles.gameplayScreen;
@@ -148,20 +148,23 @@ const GetGameplayTarget = (player) => {
 }
 
 const SetGameplayTarget = (player, direction) => {
-  let cardSpread = getPlayerGame(player)
+  if (!GameState.Players[player].TimedOut)
+  {
+    let cardSpread = getPlayerGame(player)
     .querySelector("#" + GameplayIDs.gameSpread)
     .querySelector("#" + GameplayIDs.cardSpread);
 
-  let currentIndex = GameState.Players[player].TargetIndex;
-  let newIndex = findNewTargetIndex(currentIndex, direction);
-  GameState.Players[player].TargetIndex = newIndex;
+    let currentIndex = GameState.Players[player].TargetIndex;
+    let newIndex = findNewTargetIndex(currentIndex, direction);
+    GameState.Players[player].TargetIndex = newIndex;
 
-  cardSpread.children[currentIndex].className = 
-    cardSpread.children[currentIndex].className
-    .replace(GameplayStyles.targeted, "");
-  cardSpread.children[currentIndex].removeAttribute('id');
-  cardSpread.children[newIndex].className += GameplayStyles.targeted;
-  cardSpread.children[newIndex].id = GameplayIDs.targeted;
+    cardSpread.children[currentIndex].className = 
+      cardSpread.children[currentIndex].className
+      .replace(GameplayStyles.targeted, "");
+    cardSpread.children[currentIndex].removeAttribute('id');
+    cardSpread.children[newIndex].className += GameplayStyles.targeted;
+    cardSpread.children[newIndex].id = GameplayIDs.targeted;
+  }
 }
 
 const findNewTargetIndex = (index, direction) => {
@@ -178,35 +181,38 @@ const findNewTargetIndex = (index, direction) => {
 }
 
 const SelectGameplayTarget = (player) => {
-  let selection = GetGameplayTarget(player);
-
-  if (selection.children[0].innerHTML != "")
+  if (!GameState.Players[player].TimedOut)
   {
-    if (GameState.OnDeck[GameState.Players[player].CurrentDeckIndex]
-        .IsValidAnswer(selection.children[0].innerHTML))
-    {
-      IncrementScore(player, 100);
-      GameState.Players[player].CurrentRemainingCorrect--;
-    }
-    else
-    {
-      setPlayerTimeout(player);
-    }
+    let selection = GetGameplayTarget(player);
 
-    selection.children[0].className = GameplayStyles.cardBack;
-    selection.children[0].innerHTML = "";
-
-    if (GameState.Players[player].CurrentRemainingCorrect === 0)
+    if (selection.children[0].innerHTML != "")
     {
-      if (GameState.Players[player].PerfectSpread === true)
+      if (GameState.OnDeck[GameState.Players[player].CurrentDeckIndex]
+          .IsValidAnswer(selection.children[0].innerHTML))
       {
-        IncrementScore(player, 1000);
+        IncrementScore(player, 100);
+        GameState.Players[player].CurrentRemainingCorrect--;
       }
-      if (GameState.Players[player].OnDeckCount === 0)
+      else
       {
-        // game over?
+        setPlayerTimeout(player);
       }
-      IncrementSpread(player);
+  
+      selection.children[0].className = GameplayStyles.cardBack;
+      selection.children[0].innerHTML = "";
+  
+      if (GameState.Players[player].CurrentRemainingCorrect === 0)
+      {
+        if (GameState.Players[player].PerfectSpread === true)
+        {
+          IncrementScore(player, 1000);
+        }
+        if (GameState.Players[player].OnDeckCount === 0)
+        {
+          // game over?
+        }
+        IncrementSpread(player);
+      }
     }
   }
 }
@@ -289,4 +295,4 @@ const dropOnDeck = (player) => {
   onDeck.removeChild(onDeck.firstChild);
 }
 
-export { GameplayStyles, gameplayScreen, SetGameplayTarget, SelectGameplayTarget };
+export { GameplayStyles, GameplayScreen, SetGameplayTarget, SelectGameplayTarget };

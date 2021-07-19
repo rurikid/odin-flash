@@ -52,7 +52,7 @@ const Player = () => {
 }
 
 let GameState = {
-  CurrentScreen: GameConstants.CurrentScreen.Gameplay,
+  CurrentScreen: GameConstants.CurrentScreen.Title,
   CurrentGameMode: GameConstants.GameMode.TwoPlayer,
   CurrentPlayers: 2,
   StartTime: 0,
