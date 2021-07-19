@@ -10,7 +10,7 @@ const TitleScreen = () => {
   h1.innerHTML = "Odin Flash";
   
   let h2 = document.createElement("h2");
-  h2.innerHTML = "Press any button to continue.";
+  h2.innerHTML = "Press any key to continue.";
 
   title.appendChild(h1);
   title.appendChild(h2);

@@ -6,6 +6,7 @@ const GameConstants = {
   CurrentScreen: {
     Title: "Title",
     Gameplay: "Gameplay",
+    Gameover: "Gameover"
   },
   GameMode: {
     TwoPlayer: "TwoPlayer",
@@ -25,6 +26,7 @@ const GameConstants = {
     Ninety: 90
   },
   StartingDecks: {
+    One: 1,
     Three: 3,
     Five: 5,
     Seven: 7,
@@ -43,8 +45,8 @@ const Player = () => {
     Score: 0,
     Lives: 9,
     CurrentDeckIndex: 0,
-    CurrentRemainingCorrect: 8,
-    OnDeckCount: 5,
+    CurrentRemainingCorrect: 8, // TODO: needs to be updated each spread
+    OnDeckCount: 5, // TODO: needs to be instantiated
     PerfectSpread: true,
     TimedOut: false,
     TargetIndex: 15,
@@ -63,7 +65,7 @@ let GameState = {
     SecondPlayer: GameConstants.SecondPlayer.Human,
     StartingLives: GameConstants.StartingLives.Seven,
     StartingTimer: GameConstants.StartingTimer.Ninety,
-    StartingDecks: GameConstants.StartingDecks.Five,
+    StartingDecks: GameConstants.StartingDecks.One,
     SelectedDecks: [DeckTypes.Factors],
     Difficulty: GameConstants.Difficulty.Beginner,
   },

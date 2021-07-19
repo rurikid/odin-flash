@@ -210,6 +210,7 @@ const SelectGameplayTarget = (player) => {
         if (GameState.Players[player].OnDeckCount === 0)
         {
           // game over?
+          console.log("Game Over");
         }
         IncrementSpread(player);
       }
@@ -280,14 +281,18 @@ const IncrementScore = (player, value) => {
 }
 
 const addOnDeck = (player) => {
+  GameState.Players[player].OnDeckCount++;
+
   let onDeck = getPlayerGame(player)
     .querySelector("#" + GameplayIDs.statusPanel)
     .querySelector("#" + GameplayIDs.onDeck);
 
   onDeck.appendChild(gameCard("", GameplayStyles.onDeckBase, GameplayStyles.onDeckBack));
 }
-
+// TODO: container resizes without a card
 const dropOnDeck = (player) => {
+  GameState.Players[player].OnDeckCount--;
+
   let onDeck = getPlayerGame(player)
     .querySelector("#" + GameplayIDs.statusPanel)
     .querySelector("#" + GameplayIDs.onDeck);
