@@ -13,18 +13,24 @@ const ScreenChange = (screen) => {
       newScreen = TitleScreen();
       break;
     case GameConstants.CurrentScreen.Gameplay:
-      // TODO: this needs to be instantiated in game options
-      GameState.Players[0].OnDeckCount = 1;
-      GameState.Players[1].OnDeckCount = 1;
-
       // TODO: More elegant way to deal with starting decks/ondeck
       GameState.OnDeck = DeckFactory(GameState.GameOptions.SelectedDecks,
         GameState.GameOptions.Difficulty,
         GameState.GameOptions.StartingDecks + 1);
-      newScreen = GameplayScreen(GameState.CurrentPlayers, GameState.OnDeck);
+
+      // TODO: this needs to be instantiated in game options
+      GameState.Players[0].OnDeckCount = 1;
+      GameState.Players[1].OnDeckCount = 1;
+      // TODO: move this to a better spot
+      GameState.Players[0].CurrentRemainingCorrect =
+        GameState.OnDeck[GameState.Players[0].CurrentDeckIndex].CorrectCount;
+      GameState.Players[1].CurrentRemainingCorrect =
+        GameState.OnDeck[GameState.Players[1].CurrentDeckIndex].CorrectCount;
+
+        newScreen = GameplayScreen(GameState.CurrentPlayers, GameState.OnDeck);
       break;
     case GameConstants.CurrentScreen.Gameover:
-        
+        newScreen = GameoverScreen(GameState.CurrentPlayers, GameState.Players);
       break;
   }
 

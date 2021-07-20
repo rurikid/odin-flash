@@ -1,6 +1,7 @@
 import { GameConstants, GameState } from "../GameState.js";
 import { ControlConstants } from "../Controls.js";
 import { ShuffleArray } from "../Utilities.js";
+import { ScreenChange } from "../../index.js";
 
 const GameplayStyles = {
   promptBase: "prompt-card",
@@ -187,9 +188,12 @@ const SelectGameplayTarget = (player) => {
 
     if (selection.children[0].innerHTML != "")
     {
+      GameState.Players[player].SelectedCount++;
+
       if (GameState.OnDeck[GameState.Players[player].CurrentDeckIndex]
           .IsValidAnswer(selection.children[0].innerHTML))
       {
+        GameState.Players[player].CorrectCount++;
         IncrementScore(player, 100);
         GameState.Players[player].CurrentRemainingCorrect--;
       }
@@ -209,8 +213,7 @@ const SelectGameplayTarget = (player) => {
         }
         if (GameState.Players[player].OnDeckCount === 0)
         {
-          // game over?
-          console.log("Game Over");
+          ScreenChange(GameConstants.CurrentScreen.Gameover);
         }
         IncrementSpread(player);
       }
@@ -253,8 +256,9 @@ const IncrementSpread = (player) => {
   let playerGame = getPlayerGame(player);
 
   // TODO: Current remaining might depend on the deck
-  GameState.Players[player].CurrentRemainingCorrect = 8;
   GameState.Players[player].CurrentDeckIndex++;
+  GameState.Players[player].CurrentRemainingCorrect =
+    GameState.OnDeck[GameState.Players[player].CurrentDeckIndex].CorrectCount;
   GameState.Players[player].PerfectSpread = true;
 
   if (GameState.Players[player].CurrentDeckIndex > GameState.OnDeck.length) {

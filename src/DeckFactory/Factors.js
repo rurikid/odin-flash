@@ -1,3 +1,5 @@
+const CorrectCount = 8;
+
 const getAnswers = (promptValue) => {
   let correct = [];
   let incorrect = [];
@@ -57,6 +59,7 @@ const GetFactorSpread = (difficulty) => {
     PromptValue: promptValue,
     Prompt: `Factors of ${promptValue}`,
     CardSpread: cardSpread,
+    CorrectCount: CorrectCount,
     IsValidAnswer: function(value) {
       if (this.PromptValue % value === 0) {
         this.CorrectRemaining--;
