@@ -1,8 +1,9 @@
 import { GameConstants, GameState } from "./src/GameState.js";
 import { InitControls } from "./src/Controls.js";
 import { TitleScreen } from "./src/UI/Title.js";
-import { GameplayScreen, GameplayStyles } from "./src/UI/Gameplay.js";
+import { GameplayScreen } from "./src/UI/Gameplay.js";
 import { DeckFactory } from "./src/DeckFactory/DeckFactory.js";
+import { GameOverScreen } from "./src/UI/GameOver.js";
 
 console.log('Hello Odin!');
 
@@ -30,7 +31,8 @@ const ScreenChange = (screen) => {
         newScreen = GameplayScreen(GameState.CurrentPlayers, GameState.OnDeck);
       break;
     case GameConstants.CurrentScreen.Gameover:
-        newScreen = GameoverScreen(GameState.CurrentPlayers, GameState.Players);
+        newScreen = 
+          GameOverScreen(GameState.CurrentPlayers, GameState.Players, GameState.OnDeck);
       break;
   }
 
@@ -43,6 +45,6 @@ const ScreenChange = (screen) => {
 
 InitControls();
 
-// ScreenChange(GameConstants.CurrentScreen.Title);
+ScreenChange(GameConstants.CurrentScreen.Title);
 
 export { ScreenChange };

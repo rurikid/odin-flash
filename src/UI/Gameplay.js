@@ -78,7 +78,7 @@ const gameSpread = (onDeck, player) => {
   gameSpread.id = GameplayIDs.gameSpread;
 
   gameSpread.appendChild(
-    gameCard(onDeck.Prompt, GameplayStyles.promptBase, GameplayStyles.promptFace));
+    GameCard(onDeck.Prompt, GameplayStyles.promptBase, GameplayStyles.promptFace));
 
   gameSpread.appendChild(cardSpread(onDeck.CardSpread, player));
 
@@ -92,7 +92,7 @@ const cardSpread = (cardValues, player) => {
 
   let values = ShuffleArray([...cardValues]);
   for (let i = 0; i < 16; i++) {
-    cardSpread.appendChild(gameCard(values[i], GameplayStyles.cardBase, GameplayStyles.cardFace));
+    cardSpread.appendChild(GameCard(values[i], GameplayStyles.cardBase, GameplayStyles.cardFace));
   }
 
   cardSpread.children[GameState.Players[player].TargetIndex].className += GameplayStyles.targeted;
@@ -100,7 +100,7 @@ const cardSpread = (cardValues, player) => {
   return cardSpread;
 }
 
-const gameCard = (value, baseStyle, faceStyle) => {
+const GameCard = (value, baseStyle, faceStyle) => {
   let gameCard = document.createElement('div');
   gameCard.className = baseStyle;
 
@@ -135,7 +135,7 @@ const onDeck = (count) => {
 
   for (let i = 0; i < count - 1; i++) {
     onDeck.appendChild(
-      gameCard('', GameplayStyles.onDeckBase, GameplayStyles.onDeckBack));
+      GameCard('', GameplayStyles.onDeckBase, GameplayStyles.onDeckBack));
   }
 
   return onDeck;
@@ -207,6 +207,8 @@ const SelectGameplayTarget = (player) => {
   
       if (GameState.Players[player].CurrentRemainingCorrect === 0)
       {
+        GameState.Players[player].CompletedPrompts++;
+
         if (GameState.Players[player].PerfectSpread === true)
         {
           IncrementScore(player, 1000);
@@ -214,7 +216,9 @@ const SelectGameplayTarget = (player) => {
         if (GameState.Players[player].OnDeckCount === 0)
         {
           ScreenChange(GameConstants.CurrentScreen.Gameover);
+          return;
         }
+
         IncrementSpread(player);
       }
     }
@@ -255,7 +259,6 @@ const IncrementSpread = (player) => {
 
   let playerGame = getPlayerGame(player);
 
-  // TODO: Current remaining might depend on the deck
   GameState.Players[player].CurrentDeckIndex++;
   GameState.Players[player].CurrentRemainingCorrect =
     GameState.OnDeck[GameState.Players[player].CurrentDeckIndex].CorrectCount;
@@ -292,7 +295,7 @@ const addOnDeck = (player) => {
     .querySelector("#" + GameplayIDs.statusPanel)
     .querySelector("#" + GameplayIDs.onDeck);
 
-  onDeck.appendChild(gameCard("", GameplayStyles.onDeckBase, GameplayStyles.onDeckBack));
+  onDeck.appendChild(GameCard("", GameplayStyles.onDeckBase, GameplayStyles.onDeckBack));
 }
 // TODO: container resizes without a card
 const dropOnDeck = (player) => {
@@ -305,4 +308,4 @@ const dropOnDeck = (player) => {
   onDeck.removeChild(onDeck.firstChild);
 }
 
-export { GameplayStyles, GameplayScreen, SetGameplayTarget, SelectGameplayTarget };
+export { GameplayStyles, GameplayScreen, SetGameplayTarget, SelectGameplayTarget, GameCard };

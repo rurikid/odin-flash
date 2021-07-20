@@ -44,8 +44,9 @@ const GameConstants = {
   }
 }
 
-const Player = () => {
+const Player = (player) => {
   return {
+    PlayerNumber: player,
     Score: 0,
     Lives: GameConstants.StartingLives.Seven,
     CurrentDeckIndex: 0,
@@ -55,7 +56,8 @@ const Player = () => {
     TimedOut: false,
     TargetIndex: 15,
     CorrectCount: 0,
-    SelectedCount: 0
+    SelectedCount: 0,
+    CompletedPrompts: 0,
   };
 }
 
@@ -76,7 +78,7 @@ let GameState = {
     Difficulty: GameConstants.Difficulty.Beginner,
   },
   OnDeck: [],
-  Players: [Player(), Player()],
+  Players: [Player(GameConstants.PlayerOne), Player(GameConstants.PlayerTwo)],
 };
 
 export { GameState, GameConstants };
