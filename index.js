@@ -4,6 +4,7 @@ import { TitleScreen } from "./src/UI/Title.js";
 import { GameplayScreen } from "./src/UI/Gameplay.js";
 import { DeckFactory } from "./src/DeckFactory/DeckFactory.js";
 import { GameOverScreen } from "./src/UI/GameOver.js";
+import { MainMenuScreen } from "./src/UI/MainMenu.js";
 
 console.log('Hello Odin!');
 
@@ -12,6 +13,12 @@ const ScreenChange = (screen) => {
   switch (screen) {
     case GameConstants.CurrentScreen.Title:
       newScreen = TitleScreen();
+      break;
+    case GameConstants.CurrentScreen.MainMenu:
+      newScreen = MainMenuScreen();
+      break;
+    case GameConstants.CurrentScreen.GameOptions:
+
       break;
     case GameConstants.CurrentScreen.Gameplay:
       // TODO: More elegant way to deal with starting decks/ondeck

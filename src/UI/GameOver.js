@@ -4,10 +4,10 @@ import { ScreenChange } from "../../index.js";
 
 const GameOverScreenID = "gameOverScreen";
 const TitlePromptID = "titlePrompt";
-let timeout = false;
+let lockout = false;
 
 const GameOverScreen = (playerCount, players, onDeck) => {
-  timeout = true;
+  lockout = true;
   setTimeout(() => {endGameOverTimeout()}, 5000);
 
   let gameOverScreen = document.createElement("div");
@@ -31,7 +31,7 @@ const GameOverScreen = (playerCount, players, onDeck) => {
   else
   {
     gameOverResults.innerHTML =
-      `<h1>Player ${players[0].Score > players[1].Score ? "One" : "Two"} Wins!</h1>`;
+      `<h1>Player ${players[0].CompletedPrompts > players[1].CompletedPrompts ? "One" : "Two"} Wins!</h1>`;
     playerStats.appendChild(playerResults(players[GameConstants.PlayerTwo], onDeck));
   }
 
@@ -93,7 +93,7 @@ const playerResults = (player, onDeck) => {
 }
 
 const GameOverControls = (keystroke) => {
-  if (!timeout) {
+  if (!lockout) {
     ScreenChange(GameConstants.CurrentScreen.Title);
   }
 }
@@ -101,7 +101,7 @@ const GameOverControls = (keystroke) => {
 const endGameOverTimeout = () => {
   document.getElementById(TitlePromptID).style.visibility = "visible";
 
-  timeout = false;
+  lockout = false;
 }
 
 export { GameOverScreen, GameOverControls };

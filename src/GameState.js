@@ -9,6 +9,8 @@ const GameConstants = {
   },
   CurrentScreen: {
     Title: "Title",
+    MainMenu: "MainMenu",
+    GameOptions: "GameOptions",
     Gameplay: "Gameplay",
     Gameover: "Gameover"
   },

@@ -2,6 +2,7 @@ import { GameState, GameConstants } from "./GameState.js";
 import { TitleControls } from "./UI/Title.js";
 import { SetGameplayTarget, SelectGameplayTarget } from "./UI/Gameplay.js";
 import { GameOverControls } from "./UI/GameOver.js";
+import { MainMenuControls } from "./UI/MainMenu.js";
 
 const ControlConstants = {
   Up: "Up",
@@ -11,11 +12,19 @@ const ControlConstants = {
   Select: "Select"
 }
 
+// TODO: Consider swapping player one and player two controls
+// TODO: Control sub-functions can be reduced
 const InitControls = () => {
   document.addEventListener('keydown', (e) => {
     switch (GameState.CurrentScreen) {
       case GameConstants.CurrentScreen.Title:
         titleControls(e.code);
+        break;
+      case GameConstants.CurrentScreen.MainMenu:
+        mainMenuControls(e.code);
+        break;
+      case GameConstants.CurrentScreen.GameOptions:
+
         break;
       case GameConstants.CurrentScreen.Gameplay:
         gameplayControls(e.code);
@@ -29,6 +38,20 @@ const InitControls = () => {
 
 const titleControls = (keystroke) => {
   TitleControls(keystroke);
+}
+
+const mainMenuControls = (keystroke) => {
+  switch (keystroke) {
+    case "ArrowUp":
+      MainMenuControls(ControlConstants.Up);
+      break;
+    case "ArrowDown":
+      MainMenuControls(ControlConstants.Down);
+      break;
+    case "Enter":
+      MainMenuControls(ControlConstants.Select);
+      break;
+  }
 }
 
 const gameplayControls = (keystroke) => {
