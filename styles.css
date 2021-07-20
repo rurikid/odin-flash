@@ -99,16 +99,18 @@ body {
 }
 
 .main-menu-screen h1 {
-  font-size: 64px;
+  font-size: 128px;
+  margin-bottom: 32px;
 }
 
 .main-menu-screen h2 {
+  color: var(--hintOfElusiveBlue);
   font-size: 32px;
   margin-top: 16px;
   margin-bottom: 8px;
 }
 
-.main-menu-screen label {
+/* .main-menu-screen label {
   font-size: 24px;
   padding: 5px;
 }
@@ -129,7 +131,7 @@ body {
 
 .main-menu-screen input[type="radio"]:checked + label {
   border: 1px solid var(--top);
-}
+} */
 
 .card-spread {
   width: calc(var(--cardWidth) * 5);
@@ -193,6 +195,10 @@ body {
   animation: incorrect .5s linear infinite;
 }
 
+h2.targeted  {
+  animation: text-targeting .5s linear infinite;
+}
+
 @keyframes targeting {
   0% {
     background-color: var(--hintOfElusiveBlue);
@@ -204,6 +210,19 @@ body {
     background-color: var(--spiroDiscoBall);
   }
 }
+
+@keyframes text-targeting {
+  0% {
+    color: var(--hintOfElusiveBlue);
+  }
+  50% {
+    color: var(--megaman);
+  }
+  100% {
+    color: var(--spiroDiscoBall);
+  }
+}
+
 
 @keyframes incorrect {
   0% {
