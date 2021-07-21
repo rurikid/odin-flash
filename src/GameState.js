@@ -77,7 +77,7 @@ let GameState = {
     StartingTimer: GameConstants.StartingTimer.Ninety,
     StartingDecks: GameConstants.StartingDecks.One,
     SelectedDecks: [DeckTypes.Factors],
-    Difficulty: GameConstants.Difficulty.Beginner,
+    Difficulty: GameConstants.Difficulty.Expert,
   },
   OnDeck: [],
   Players: [Player(GameConstants.PlayerOne), Player(GameConstants.PlayerTwo)],

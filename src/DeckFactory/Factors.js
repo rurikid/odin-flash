@@ -1,4 +1,19 @@
+import { DifficultyConstants } from "./DeckFactory.js";
+
 const CorrectCount = 8;
+
+const getDifficultySettings = (difficulty) => {
+  switch (difficulty) {
+    case DifficultyConstants.Beginner:
+      return { Min: 1, Max: 50, MinFactors: 4 };
+    case DifficultyConstants.Intermediate:
+      return { Min: 51, Max: 100, MinFactors: 4 };
+    case DifficultyConstants.Advanced:
+      return { Min: 101, Max: 500, MinFactors: 6 };
+    case DifficultyConstants.Expert:
+      return { Min: 501, Max: 999, MinFactors: 8 };
+  }
+}
 
 const getAnswers = (promptValue) => {
   let correct = [];
@@ -46,10 +61,12 @@ const buildCardSpread = (answers) => {
 }
 
 const GetFactorSpread = (difficulty) => {
-  let promptValue = Math.floor(Math.random() * 100) + 1;
+  let difficultySettings = getDifficultySettings(difficulty);
+  let promptValue = 
+    Math.floor(Math.random() * (difficultySettings.Max - difficultySettings.Min + 1) + difficultySettings.Min);
   let answers = getAnswers(promptValue);
 
-  if (answers.Correct.length <= 3) {
+  if (answers.Correct.length <= difficultySettings.MinFactors) {
     return GetFactorSpread(difficulty);
   }
 

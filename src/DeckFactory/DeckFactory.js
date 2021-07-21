@@ -1,16 +1,16 @@
 import { GetFactorSpread } from "./Factors.js";
 
 const DeckTypes = {
-  Antonyms: "Antonyms",
+  // Antonyms: "Antonyms",
   Factors: "Factors",
-  Fractions: "Fractions",
+  // Fractions: "Fractions",
   Multiples: "Multiples",
   PeriodicTable: "PeriodicTable",
   Primes: "Primes",
-  Synonyms: "Synonyms"
+  // Synonyms: "Synonyms"
 }
 
-const Difficulties = {
+const DifficultyConstants = {
   Beginner: "Beginner",
   Intermediate: "Intermediate",
   Advanced: "Advanced",
@@ -18,7 +18,6 @@ const Difficulties = {
 }
 
 // TODO: implement difficulties
-// TODO: add number of correct property
 const DeckFactory = (selectedDecks, difficulty, count) => {
   let decks = [];
 
@@ -28,11 +27,11 @@ const DeckFactory = (selectedDecks, difficulty, count) => {
 
     switch (deckType) {
       case DeckTypes.Factors:
-        decks.push(GetFactorSpread());
+        decks.push(GetFactorSpread(difficulty));
     }
   }
 
   return decks;
 }
 
-export { DeckTypes, DeckFactory };
+export { DeckTypes, DeckFactory, DifficultyConstants };
