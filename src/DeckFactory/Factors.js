@@ -1,4 +1,4 @@
-import { DifficultyConstants } from "./DeckFactory.js";
+import { DeckCategories, DifficultyConstants } from "./DeckFactory.js";
 
 const CorrectCount = 8;
 
@@ -73,18 +73,18 @@ const GetFactorSpread = (difficulty) => {
   let cardSpread = buildCardSpread(answers);
 
   let factorSpread = {
+    Category: DeckCategories.Mathematics,
     PromptValue: promptValue,
     Prompt: `Factors of ${promptValue}`,
     CardSpread: cardSpread,
     CorrectCount: CorrectCount,
     IsValidAnswer: function(value) {
       if (this.PromptValue % value === 0) {
-        this.CorrectRemaining--;
         return true;
       }
       return false;
     }
-  }
+  };
 
   return factorSpread;
 }

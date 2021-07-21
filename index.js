@@ -29,6 +29,7 @@ const ScreenChange = (screen) => {
       // TODO: this needs to be instantiated in game options
       GameState.Players[0].OnDeckCount = 1;
       GameState.Players[1].OnDeckCount = 1;
+      
       // TODO: move this to a better spot
       GameState.Players[0].CurrentRemainingCorrect =
         GameState.OnDeck[GameState.Players[0].CurrentDeckIndex].CorrectCount;

@@ -1,4 +1,5 @@
 import { GetFactorSpread } from "./Factors.js";
+import { GetPrimeSpread } from "./Primes.js";
 
 const DeckTypes = {
   // Antonyms: "Antonyms",
@@ -8,6 +9,11 @@ const DeckTypes = {
   PeriodicTable: "PeriodicTable",
   Primes: "Primes",
   // Synonyms: "Synonyms"
+}
+
+const DeckCategories = {
+  Mathematics: "Mathematics",
+  Chemistry: "Chemistry"
 }
 
 const DifficultyConstants = {
@@ -28,10 +34,17 @@ const DeckFactory = (selectedDecks, difficulty, count) => {
     switch (deckType) {
       case DeckTypes.Factors:
         decks.push(GetFactorSpread(difficulty));
+        break;
+      case DeckTypes.Multiples:
+
+        break;
+      case DeckTypes.Primes:
+        decks.push(GetPrimeSpread(difficulty));
+        break;
     }
   }
 
   return decks;
 }
 
-export { DeckTypes, DeckFactory, DifficultyConstants };
+export { DeckTypes, DeckFactory, DifficultyConstants, DeckCategories };

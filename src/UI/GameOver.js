@@ -82,10 +82,11 @@ const playerResults = (player, onDeck) => {
   let promptList = document.createElement("div");
   promptList.className = "flex-column flex-center prompt-list";
 
-  onDeck.forEach((deck) => {
+  for (let i = 0; i < player.CompletedPrompts; i++)
+  {
     promptList.appendChild(
-      GameCard(deck.Prompt, GameplayStyles.promptBase, GameplayStyles.promptFace));
-  });
+      GameCard(onDeck[i].Prompt, GameplayStyles.promptBase, GameplayStyles.promptFace));
+  }
 
   results.appendChild(promptList);
 
