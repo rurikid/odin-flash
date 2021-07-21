@@ -47,8 +47,9 @@ const buildCardSpread = (difficultySettings) => {
   }
 
   while (cardSpread.length < 16) {
-    let value = Math.floor(Math.random() * difficultySettings.Max);
-    if (!isValidAnswer(value))
+    let value = Math.floor((Math.random() * difficultySettings.Max) + 1);
+    if (!isValidAnswer(value) &&
+        !cardSpread.includes(value))
     {
       cardSpread.push(value);
     }
@@ -68,7 +69,7 @@ const GetPrimeSpread = (difficulty) => {
       return ExpertPrimes.includes(parseInt(value));
     }
   };
-  console.log(primeSpread);
+
   return primeSpread;
 }
 

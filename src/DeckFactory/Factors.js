@@ -32,18 +32,18 @@ const getAnswers = (promptValue) => {
 const buildCardSpread = (answers) => {
   let cardSpread = [];
 
-  if (answers.Correct.length <= 8) {
+  if (answers.Correct.length <= CorrectCount) {
     cardSpread.push(...answers.Correct);
   }
 
   let correct = [...answers.Correct];
-  while (cardSpread.length < 8) {
+  while (cardSpread.length < CorrectCount) {
     let index = Math.floor(Math.random() * correct.length);
     cardSpread.push(correct[index]);
     correct.splice(index, 1);
   }
 
-  if (answers.Incorrect.length <= 8) {
+  if (answers.Incorrect.length <= 16 - CorrectCount) {
     cardSpread.push(...answers.Incorrect);
   }
 
@@ -79,10 +79,7 @@ const GetFactorSpread = (difficulty) => {
     CardSpread: cardSpread,
     CorrectCount: CorrectCount,
     IsValidAnswer: function(value) {
-      if (this.PromptValue % value === 0) {
-        return true;
-      }
-      return false;
+      return this.PromptValue % value === 0;
     }
   };
 

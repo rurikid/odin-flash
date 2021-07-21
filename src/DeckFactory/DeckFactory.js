@@ -1,4 +1,5 @@
 import { GetFactorSpread } from "./Factors.js";
+import { GetMultipleSpread } from "./Multiples.js";
 import { GetPrimeSpread } from "./Primes.js";
 
 const DeckTypes = {
@@ -36,7 +37,7 @@ const DeckFactory = (selectedDecks, difficulty, count) => {
         decks.push(GetFactorSpread(difficulty));
         break;
       case DeckTypes.Multiples:
-
+        decks.push(GetMultipleSpread(difficulty));
         break;
       case DeckTypes.Primes:
         decks.push(GetPrimeSpread(difficulty));
