@@ -1,5 +1,6 @@
 import { GetFactorSpread } from "./Factors.js";
 import { GetMultipleSpread } from "./Multiples.js";
+import { GetPeriodicTableSpread } from "./PeriodicTable.js";
 import { GetPrimeSpread } from "./Primes.js";
 
 const DeckTypes = {
@@ -24,7 +25,7 @@ const DifficultyConstants = {
   Expert: "Expert"
 }
 
-// TODO: implement difficulties
+// TODO: provide more robust card support, one value inadequate
 const DeckFactory = (selectedDecks, difficulty, count) => {
   let decks = [];
 
@@ -39,6 +40,8 @@ const DeckFactory = (selectedDecks, difficulty, count) => {
       case DeckTypes.Multiples:
         decks.push(GetMultipleSpread(difficulty));
         break;
+      case DeckTypes.PeriodicTable:
+        decks.push(GetPeriodicTableSpread(difficulty));
       case DeckTypes.Primes:
         decks.push(GetPrimeSpread(difficulty));
         break;

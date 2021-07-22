@@ -76,7 +76,7 @@ let GameState = {
     StartingLives: GameConstants.StartingLives.Seven,
     StartingTimer: GameConstants.StartingTimer.Ninety,
     StartingDecks: GameConstants.StartingDecks.One,
-    SelectedDecks: [DeckTypes.Primes, DeckTypes.Factors, DeckTypes.Multiples],
+    SelectedDecks: [DeckTypes.PeriodicTable],
     Difficulty: GameConstants.Difficulty.Beginner,
   },
   OnDeck: [],
