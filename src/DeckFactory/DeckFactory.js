@@ -42,6 +42,7 @@ const DeckFactory = (selectedDecks, difficulty, count) => {
         break;
       case DeckTypes.PeriodicTable:
         decks.push(GetPeriodicTableSpread(difficulty));
+        break;
       case DeckTypes.Primes:
         decks.push(GetPrimeSpread(difficulty));
         break;
