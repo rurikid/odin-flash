@@ -1,4 +1,4 @@
-import { DeckFactory, DeckTypes } from "./DeckFactory/DeckFactory.js";
+import { DeckTypes } from "./DeckFactory/DeckFactory.js";
 
 const GameConstants = {
   PlayerOne: 0,
@@ -52,7 +52,7 @@ const Player = (player) => {
     Score: 0,
     Lives: GameConstants.StartingLives.Seven,
     CurrentDeckIndex: 0,
-    CurrentRemainingCorrect: 8, // TODO: needs to be updated each spread
+    CurrentRemainingCorrect: 8,
     OnDeckCount: 5, // TODO: needs to be instantiated
     PerfectSpread: true,
     TimedOut: false,
@@ -76,7 +76,7 @@ let GameState = {
     StartingLives: GameConstants.StartingLives.Seven,
     StartingTimer: GameConstants.StartingTimer.Ninety,
     StartingDecks: GameConstants.StartingDecks.One,
-    SelectedDecks: [DeckTypes.Factors],
+    SelectedDecks: [DeckTypes.PeriodicTable],
     Difficulty: GameConstants.Difficulty.Beginner,
   },
   OnDeck: [],

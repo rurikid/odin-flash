@@ -1,24 +1,31 @@
 import { GetFactorSpread } from "./Factors.js";
+import { GetMultipleSpread } from "./Multiples.js";
+import { GetPeriodicTableSpread } from "./PeriodicTable.js";
+import { GetPrimeSpread } from "./Primes.js";
 
 const DeckTypes = {
-  Antonyms: "Antonyms",
+  // Antonyms: "Antonyms",
   Factors: "Factors",
-  Fractions: "Fractions",
+  // Fractions: "Fractions",
   Multiples: "Multiples",
   PeriodicTable: "PeriodicTable",
   Primes: "Primes",
-  Synonyms: "Synonyms"
+  // Synonyms: "Synonyms"
 }
 
-const Difficulties = {
+const DeckCategories = {
+  Mathematics: "Mathematics",
+  Chemistry: "Chemistry"
+}
+
+const DifficultyConstants = {
   Beginner: "Beginner",
   Intermediate: "Intermediate",
   Advanced: "Advanced",
   Expert: "Expert"
 }
 
-// TODO: implement difficulties
-// TODO: add number of correct property
+// TODO: provide more robust card support, one value inadequate
 const DeckFactory = (selectedDecks, difficulty, count) => {
   let decks = [];
 
@@ -28,11 +35,21 @@ const DeckFactory = (selectedDecks, difficulty, count) => {
 
     switch (deckType) {
       case DeckTypes.Factors:
-        decks.push(GetFactorSpread());
+        decks.push(GetFactorSpread(difficulty));
+        break;
+      case DeckTypes.Multiples:
+        decks.push(GetMultipleSpread(difficulty));
+        break;
+      case DeckTypes.PeriodicTable:
+        decks.push(GetPeriodicTableSpread(difficulty));
+        break;
+      case DeckTypes.Primes:
+        decks.push(GetPrimeSpread(difficulty));
+        break;
     }
   }
 
   return decks;
 }
 
-export { DeckTypes, DeckFactory };
+export { DeckTypes, DeckFactory, DifficultyConstants, DeckCategories };

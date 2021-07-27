@@ -69,6 +69,10 @@ body {
   margin: 5px 0px 5px 0px;
 }
 
+.title-screen {
+  animation: fadein 1s;
+}
+
 .title-screen h1 {
   font-size: 128px;
   font-family: 'Nova Cut';
@@ -93,7 +97,17 @@ body {
   }
 }
 
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .main-menu-screen {
+  animation: fadein 3s;
   font-family: 'Nova Cut';
   color: var(--top);
 }
@@ -313,6 +327,10 @@ h2.targeted  {
   font-size: 16px;
   margin-top: 32px;
   animation: blinking 1.5s linear infinite;
+}
+
+footer {
+  margin-top: 3px;
 }
 
 footer a {
