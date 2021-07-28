@@ -8,7 +8,7 @@ const DeckTypes = {
   Factors: "Factors",
   // Fractions: "Fractions",
   Multiples: "Multiples",
-  PeriodicTable: "PeriodicTable",
+  PeriodicTable: "Periodic Table",
   Primes: "Primes",
   // Synonyms: "Synonyms"
 }
