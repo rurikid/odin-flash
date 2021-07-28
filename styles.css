@@ -217,7 +217,7 @@ body {
   text-decoration-color: var(--top);
 }
 
-h2.targeted, li.targeted {
+h2.targeted, li.targeted, h3.targeted {
   animation: text-targeting .5s linear infinite;
 }
 

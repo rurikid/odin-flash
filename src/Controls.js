@@ -25,7 +25,7 @@ const InitControls = () => {
         mainMenuControls(e.code);
         break;
       case GameConstants.CurrentScreen.GameOptions:
-        GameOptionsControls(e.code);
+        gameOptionsControls(e.code);
         break;
       case GameConstants.CurrentScreen.Gameplay:
         gameplayControls(e.code);
@@ -51,6 +51,26 @@ const mainMenuControls = (keystroke) => {
       break;
     case "Enter":
       MainMenuControls(ControlConstants.Select);
+      break;
+  }
+}
+
+const gameOptionsControls = (keystroke) => {
+  switch (keystroke) {
+    case "ArrowUp":
+      GameOptionsControls(ControlConstants.Up);
+      break;
+    case "ArrowDown":
+      GameOptionsControls(ControlConstants.Down);
+      break;
+    case "ArrowLeft":
+      GameOptionsControls(ControlConstants.Left);
+      break;
+    case "ArrowRight":
+      GameOptionsControls(ControlConstants.Right);
+      break;
+    case "Enter":
+      GameOptionsControls(ControlConstants.Select);
       break;
   }
 }
@@ -92,10 +112,6 @@ const gameplayControls = (keystroke) => {
 
 const gameOverControls = (keystroke) => {
   GameOverControls(keystroke);
-}
-
-const gameOptionsControls = (keystroke) => {
-  GameOptionsControls(keystroke);
 }
 
 export { InitControls, ControlConstants };

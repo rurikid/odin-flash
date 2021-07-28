@@ -68,13 +68,11 @@ const Player = (player) => {
 
 let GameState = {
   CurrentScreen: GameConstants.CurrentScreen.Title,
-  CurrentGameMode: null,
   CurrentPlayers: GameConstants.CurrentPlayers.Two,
   StartTime: 0,
   CurrentTimer: GameConstants.TimeAttackTimer.Sixty,
-  CurrentLives: GameConstants.SurvivalLives.Five,
   GameOptions: {
-    GameMode: null,
+    GameMode: GameConstants.GameMode.TwoPlayer,
     SecondPlayer: GameConstants.SecondPlayer.Human,
     // SurvivalLives: GameConstants.SurvivalLives.Five,
     // TimeAttackTimer: GameConstants.TimeAttackTimer.Sixty,

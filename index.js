@@ -25,7 +25,7 @@ const ScreenChange = (screen) => {
       // TODO: More elegant way to deal with starting decks/ondeck
       GameState.OnDeck = DeckFactory(GameState.GameOptions.SelectedDecks,
         GameState.GameOptions.Difficulty,
-        GameState.GameOptions.StartingDecks + 1);
+        GameState.GameOptions.TwoPlayerDecks + 1);
 
       // TODO: this needs to be instantiated in game options
       GameState.Players[0].OnDeckCount = 1;
@@ -54,7 +54,6 @@ const ScreenChange = (screen) => {
 
 InitControls();
 
-ScreenChange(GameConstants.CurrentScreen.GameOptions);
-// ScreenChange(GameConstants.CurrentScreen.Title);
+ScreenChange(GameConstants.CurrentScreen.Title);
 
 export { ScreenChange };
