@@ -3,6 +3,7 @@ import { TitleControls } from "./UI/Title.js";
 import { SetGameplayTarget, SelectGameplayTarget } from "./UI/Gameplay.js";
 import { GameOverControls } from "./UI/GameOver.js";
 import { MainMenuControls } from "./UI/MainMenu.js";
+import { GameOptionsControls } from "./UI/GameOptions.js";
 
 const ControlConstants = {
   Up: "Up",
@@ -24,7 +25,7 @@ const InitControls = () => {
         mainMenuControls(e.code);
         break;
       case GameConstants.CurrentScreen.GameOptions:
-
+        gameOptionsControls(e.code);
         break;
       case GameConstants.CurrentScreen.Gameplay:
         gameplayControls(e.code);
@@ -50,6 +51,26 @@ const mainMenuControls = (keystroke) => {
       break;
     case "Enter":
       MainMenuControls(ControlConstants.Select);
+      break;
+  }
+}
+
+const gameOptionsControls = (keystroke) => {
+  switch (keystroke) {
+    case "ArrowUp":
+      GameOptionsControls(ControlConstants.Up);
+      break;
+    case "ArrowDown":
+      GameOptionsControls(ControlConstants.Down);
+      break;
+    case "ArrowLeft":
+      GameOptionsControls(ControlConstants.Left);
+      break;
+    case "ArrowRight":
+      GameOptionsControls(ControlConstants.Right);
+      break;
+    case "Enter":
+      GameOptionsControls(ControlConstants.Select);
       break;
   }
 }

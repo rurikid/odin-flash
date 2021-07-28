@@ -1,5 +1,5 @@
 import { ControlConstants } from "../Controls.js";
-import { GameConstants } from "../GameState.js";
+import { GameConstants, GameState } from "../GameState.js";
 import { ScreenChange } from "../../index.js";
 
 let targetIndex = 0;
@@ -34,13 +34,19 @@ const MainMenuControls = (keystroke) => {
   {
     switch (menuOptions[targetIndex].id) {
       case MainMenuIDs.Survival:
+        GameState.CurrentGameMode = GameConstants.GameMode.Survival;
+        ScreenChange(GameConstants.CurrentScreen.Gameplay);
         break;
       case MainMenuIDs.TimeAttack:
+        GameState.CurrentGameMode = GameConstants.GameMode.TimeAttack;
+        ScreenChange(GameConstants.CurrentScreen.Gameplay);
         break;
       case MainMenuIDs.TwoPlayer:
+        GameState.CurrentGameMode = GameConstants.GameMode.TwoPlayer;
         ScreenChange(GameConstants.CurrentScreen.Gameplay);
         break;
       case MainMenuIDs.GameOptions:
+        ScreenChange(GameConstants.CurrentScreen.GameOptions);
         break;
     }
     return;

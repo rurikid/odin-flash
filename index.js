@@ -5,6 +5,7 @@ import { GameplayScreen } from "./src/UI/Gameplay.js";
 import { DeckFactory } from "./src/DeckFactory/DeckFactory.js";
 import { GameOverScreen } from "./src/UI/GameOver.js";
 import { MainMenuScreen } from "./src/UI/MainMenu.js";
+import { GameOptionsScreen } from "./src/UI/GameOptions.js";
 
 console.log('Hello Odin!');
 
@@ -18,18 +19,18 @@ const ScreenChange = (screen) => {
       newScreen = MainMenuScreen();
       break;
     case GameConstants.CurrentScreen.GameOptions:
-
+      newScreen = GameOptionsScreen();
       break;
     case GameConstants.CurrentScreen.Gameplay:
       // TODO: More elegant way to deal with starting decks/ondeck
       GameState.OnDeck = DeckFactory(GameState.GameOptions.SelectedDecks,
         GameState.GameOptions.Difficulty,
-        GameState.GameOptions.StartingDecks + 1);
+        GameState.GameOptions.TwoPlayerDecks + 1);
 
       // TODO: this needs to be instantiated in game options
       GameState.Players[0].OnDeckCount = 1;
       GameState.Players[1].OnDeckCount = 1;
-      
+
       // TODO: move this to a better spot
       GameState.Players[0].CurrentRemainingCorrect =
         GameState.OnDeck[GameState.Players[0].CurrentDeckIndex].CorrectCount;

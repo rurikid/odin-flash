@@ -106,7 +106,7 @@ body {
   }
 }
 
-.main-menu-screen {
+.main-menu-screen, .game-options-screen {
   animation: fadein 3s;
   font-family: 'Nova Cut';
   color: var(--top);
@@ -124,28 +124,31 @@ body {
   margin-bottom: 8px;
 }
 
-/* .main-menu-screen label {
+.game-options-screen h1 {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.game-options-screen h2 {
+  font-size: 32px;
+  margin: 16px 0 8px 0;
+}
+
+.game-options-screen li {
   font-size: 24px;
-  padding: 5px;
+  color: var(--hintOfElusiveBlue);
+  margin-left: 16px;
 }
 
-.main-menu-screen label:hover {
-  cursor: pointer;
+.game-options-screen li:first-child {
+  margin-left: 0px;
 }
 
-.main-menu-screen input[type="submit"] {
-  margin-top: 16px;
+.game-options-screen h3 {
+  font-size: 24px;
+  color: var(--hintOfElusiveBlue);
+  margin-top: 24px;
 }
-
-.main-menu-screen input[type="radio"] {
-  position: fixed;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.main-menu-screen input[type="radio"]:checked + label {
-  border: 1px solid var(--top);
-} */
 
 .card-spread {
   width: calc(var(--cardWidth) * 5);
@@ -209,7 +212,12 @@ body {
   animation: incorrect .5s linear infinite;
 }
 
-h2.targeted  {
+.selected {
+  text-decoration: underline;
+  text-decoration-color: var(--top);
+}
+
+h2.targeted, li.targeted, h3.targeted {
   animation: text-targeting .5s linear infinite;
 }
 
