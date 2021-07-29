@@ -28,8 +28,8 @@ const ScreenChange = (screen) => {
         GameState.GameOptions.TwoPlayerDecks + 1);
 
       // TODO: this needs to be instantiated in game options
-      GameState.Players[0].OnDeckCount = 1;
-      GameState.Players[1].OnDeckCount = 1;
+      GameState.Players[0].OnDeckCount = GameState.GameOptions.TwoPlayerDecks;
+      GameState.Players[1].OnDeckCount = GameState.GameOptions.TwoPlayerDecks;
 
       // TODO: move this to a better spot
       GameState.Players[0].CurrentRemainingCorrect =

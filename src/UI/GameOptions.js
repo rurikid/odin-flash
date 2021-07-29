@@ -217,7 +217,8 @@ const selectTarget = () => {
         .removeAttribute('class');
       target.className = ('selected targeted');
 
-      GameState.GameOptions[targetParent.id] = GameOptions[targetParent.id].Values[target.innerHTML];
+      GameState.GameOptions[targetParent.id] = 
+        GameOptions[targetParent.id].Values[target.innerHTML];
       break;
     case GameOptions.DeckTypes.StateKey:
       if (target.classList.contains('selected')) {
