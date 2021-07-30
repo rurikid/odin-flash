@@ -27,6 +27,10 @@ const getCardSpread = (prompt, scaleCap, maxValue) => {
     correct.push(prompt * i);
   }
 
+  if (correct.length <= CorrectCount) {
+    cardSpread.push(...correct);
+  }
+
   while (cardSpread.length < CorrectCount) {
     let index = Math.floor(Math.random() * correct.length);
     cardSpread.push(correct[index]);
@@ -34,7 +38,7 @@ const getCardSpread = (prompt, scaleCap, maxValue) => {
   }
 
   while (cardSpread.length < 16) {
-    let value = Math.floor((Math.random() * maxValue) + 1);
+    let value = Math.floor((Math.random() * (maxValue * scaleCap)) + 1);
     if (!isValidAnswer(value) &&
         !cardSpread.includes(value)) {
       cardSpread.push(value);

@@ -6,6 +6,7 @@ import { DeckFactory } from "./src/DeckFactory/DeckFactory.js";
 import { GameOverScreen } from "./src/UI/GameOver.js";
 import { MainMenuScreen } from "./src/UI/MainMenu.js";
 import { GameOptionsScreen } from "./src/UI/GameOptions.js";
+import { InitAudio, AudioEffects, PlayMusic, PlayEffect, StopMusic, TransitionMusic } from "./src/Audio.js";
 
 console.log('Hello Odin!');
 
@@ -22,14 +23,16 @@ const ScreenChange = (screen) => {
       newScreen = GameOptionsScreen();
       break;
     case GameConstants.CurrentScreen.Gameplay:
+      TransitionMusic(AudioEffects.GameplayMusic, true);
+
       // TODO: More elegant way to deal with starting decks/ondeck
       GameState.OnDeck = DeckFactory(GameState.GameOptions.SelectedDecks,
         GameState.GameOptions.Difficulty,
         GameState.GameOptions.TwoPlayerDecks + 1);
 
       // TODO: this needs to be instantiated in game options
-      GameState.Players[0].OnDeckCount = 1;
-      GameState.Players[1].OnDeckCount = 1;
+      GameState.Players[0].OnDeckCount = GameState.GameOptions.TwoPlayerDecks;
+      GameState.Players[1].OnDeckCount = GameState.GameOptions.TwoPlayerDecks;
 
       // TODO: move this to a better spot
       GameState.Players[0].CurrentRemainingCorrect =
@@ -37,11 +40,16 @@ const ScreenChange = (screen) => {
       GameState.Players[1].CurrentRemainingCorrect =
         GameState.OnDeck[GameState.Players[1].CurrentDeckIndex].CorrectCount;
 
-        newScreen = GameplayScreen(GameState.CurrentPlayers, GameState.OnDeck);
+      GameState.Players[0].TargetIndex = 15;
+      GameState.Players[1].TargetIndex = 15;
+
+      newScreen = GameplayScreen(GameState.CurrentPlayers, GameState.OnDeck);
       break;
     case GameConstants.CurrentScreen.Gameover:
-        newScreen = 
-          GameOverScreen(GameState.CurrentPlayers, GameState.Players, GameState.OnDeck);
+      TransitionMusic(AudioEffects.GameOverMusic, true);
+
+      newScreen = 
+        GameOverScreen(GameState.CurrentPlayers, GameState.Players, GameState.OnDeck);
       break;
   }
 
@@ -51,6 +59,9 @@ const ScreenChange = (screen) => {
   gameCanvas.innerHTML = '';
   gameCanvas.appendChild(newScreen);
 }
+
+InitAudio();
+setTimeout(function() { PlayMusic(AudioEffects.TitleMusic, true); }, 500);
 
 InitControls();
 

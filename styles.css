@@ -245,7 +245,6 @@ h2.targeted, li.targeted, h3.targeted {
   }
 }
 
-
 @keyframes incorrect {
   0% {
     background-color: var(--hintOfElusiveBlue);
@@ -256,6 +255,10 @@ h2.targeted, li.targeted, h3.targeted {
   100% {
     background-color: var(--redOrange);
   }
+}
+
+.gameplay-screen {
+  animation: fadein 3s;
 }
 
 .player-two {

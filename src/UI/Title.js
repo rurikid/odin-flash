@@ -1,13 +1,17 @@
 import { ScreenChange } from "../../index.js";
 import { GameConstants } from "../GameState.js";
+import { PlayEffect, AudioEffects } from "../Audio.js";
 
-let lockout = false;
+let lockout = true;
 const ContinuePrompt = "continuePrompt";
 
 // TODO: Keep <h1>Odin Flash</h1> position consistent with MainMenu
 const TitleScreen = () => {
   lockout = true;
-  setTimeout(() => {endTitleLockout()}, 3000);
+  setTimeout(function() {
+    document.getElementById(ContinuePrompt).style.visibility = "visible";
+    lockout = false;
+  }, 3000);
 
   let title = document.createElement("div");
   title.className = "flex-column flex-center title-screen";
@@ -29,14 +33,9 @@ const TitleScreen = () => {
 
 const TitleControls = (keystroke) => {
   if (!lockout) {
+    PlayEffect(AudioEffects.Select);
     ScreenChange(GameConstants.CurrentScreen.MainMenu);
   }
-}
-
-const endTitleLockout = () => {
-  document.getElementById(ContinuePrompt).style.visibility = "visible";
-
-  lockout = false;
 }
 
 export { TitleScreen, TitleControls };

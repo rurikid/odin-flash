@@ -4,6 +4,7 @@ import { SetGameplayTarget, SelectGameplayTarget } from "./UI/Gameplay.js";
 import { GameOverControls } from "./UI/GameOver.js";
 import { MainMenuControls } from "./UI/MainMenu.js";
 import { GameOptionsControls } from "./UI/GameOptions.js";
+import { AudioEffects, PlayMusic, PlayEffect, StopMusic } from "./Audio.js";
 
 const ControlConstants = {
   Up: "Up",
@@ -44,12 +45,15 @@ const titleControls = (keystroke) => {
 const mainMenuControls = (keystroke) => {
   switch (keystroke) {
     case "ArrowUp":
+      PlayEffect(AudioEffects.Target);
       MainMenuControls(ControlConstants.Up);
       break;
     case "ArrowDown":
+      PlayEffect(AudioEffects.Target);
       MainMenuControls(ControlConstants.Down);
       break;
     case "Enter":
+      PlayEffect(AudioEffects.Select);
       MainMenuControls(ControlConstants.Select);
       break;
   }
@@ -58,18 +62,23 @@ const mainMenuControls = (keystroke) => {
 const gameOptionsControls = (keystroke) => {
   switch (keystroke) {
     case "ArrowUp":
+      PlayEffect(AudioEffects.Target);
       GameOptionsControls(ControlConstants.Up);
       break;
     case "ArrowDown":
+      PlayEffect(AudioEffects.Target);
       GameOptionsControls(ControlConstants.Down);
       break;
     case "ArrowLeft":
+      PlayEffect(AudioEffects.Target);
       GameOptionsControls(ControlConstants.Left);
       break;
     case "ArrowRight":
+      PlayEffect(AudioEffects.Target);
       GameOptionsControls(ControlConstants.Right);
       break;
     case "Enter":
+      PlayEffect(AudioEffects.Select);
       GameOptionsControls(ControlConstants.Select);
       break;
   }
@@ -111,6 +120,7 @@ const gameplayControls = (keystroke) => {
 }
 
 const gameOverControls = (keystroke) => {
+  PlayEffect(AudioEffects.Select);
   GameOverControls(keystroke);
 }
 
