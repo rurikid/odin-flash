@@ -6,6 +6,7 @@ import { DeckFactory } from "./src/DeckFactory/DeckFactory.js";
 import { GameOverScreen } from "./src/UI/GameOver.js";
 import { MainMenuScreen } from "./src/UI/MainMenu.js";
 import { GameOptionsScreen } from "./src/UI/GameOptions.js";
+import { InitAudio, AudioEffects, PlayAudio, StopAudio } from "./src/Audio.js";
 
 console.log('Hello Odin!');
 
@@ -52,6 +53,9 @@ const ScreenChange = (screen) => {
   gameCanvas.appendChild(newScreen);
 }
 
+InitAudio();
+setTimeout(function() { PlayAudio(AudioEffects.TitleMusic, true); }, 500);
+setTimeout(function() { StopAudio(AudioEffects.TitleMusic); }, 5000);
 InitControls();
 
 ScreenChange(GameConstants.CurrentScreen.Title);

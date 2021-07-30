@@ -2,6 +2,7 @@ import { GameConstants, GameState } from "../GameState.js";
 import { ControlConstants } from "../Controls.js";
 import { ShuffleArray } from "../Utilities.js";
 import { ScreenChange } from "../../index.js";
+import { PlayAudio, AudioEffects } from "../Audio.js";
 
 const GameplayStyles = {
   promptBase: "prompt-card",
@@ -151,6 +152,8 @@ const GetGameplayTarget = (player) => {
 const SetGameplayTarget = (player, direction) => {
   if (!GameState.Players[player].TimedOut)
   {
+    PlayAudio(AudioEffects.Target, false);
+
     let cardSpread = getPlayerGame(player)
     .querySelector("#" + GameplayIDs.gameSpread)
     .querySelector("#" + GameplayIDs.cardSpread);
@@ -165,6 +168,8 @@ const SetGameplayTarget = (player, direction) => {
     cardSpread.children[currentIndex].removeAttribute('id');
     cardSpread.children[newIndex].className += GameplayStyles.targeted;
     cardSpread.children[newIndex].id = GameplayIDs.targeted;
+  } else {
+    PlayAudio(AudioEffects.Incorrect);
   }
 }
 
@@ -193,12 +198,14 @@ const SelectGameplayTarget = (player) => {
       if (GameState.OnDeck[GameState.Players[player].CurrentDeckIndex]
           .IsValidAnswer(selection.children[0].innerHTML))
       {
+        PlayAudio(AudioEffects.Correct, false);
         GameState.Players[player].CorrectCount++;
         IncrementScore(player, 100);
         GameState.Players[player].CurrentRemainingCorrect--;
       }
       else
       {
+        PlayAudio(AudioEffects.Incorrect, false);
         setPlayerTimeout(player);
       }
   
@@ -253,6 +260,8 @@ const getPlayerGame = (player) => {
 }
 
 const IncrementSpread = (player) => {
+  PlayAudio(AudioEffects.NewDeck, false);
+
   dropOnDeck(player);
   addOnDeck(player === GameConstants.PlayerOne ? 
     GameConstants.PlayerTwo : GameConstants.PlayerOne);
