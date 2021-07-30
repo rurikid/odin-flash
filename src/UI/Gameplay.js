@@ -8,11 +8,14 @@ import { DeckFactory } from "../DeckFactory/DeckFactory.js";
 const GameplayStyles = {
   promptBase: "prompt-card",
   promptFace: "flex-center prompt-face",
-  cardBase: "card",
+  cardContainer: "card-container",
+  card: "flex-center card",
+  cardFaceBorder: "card-face-border",
+  cardBackBorder: "card-back-border",
   cardFace: "flex-center card-face",
-  cardBack: "flex-center card-back",
-  onDeckBase: "card on-deck-deck",
-  onDeckBack: "card-back",
+  cardBack: "card-back",
+  onDeckBase: "on-deck-card",
+  onDeckBack: "on-deck-back",
   gameplayScreen: "flex-center flex-row gameplay-screen",
   playerOne: "flex-center flex-row player-one",
   playerTwo: "flex-center flex-row player-two",
@@ -21,8 +24,9 @@ const GameplayStyles = {
   statusPanel: "flex-center flex-column status-panel",
   gameStatus: "flex-center flex-column game-status",
   onDeck: "flex-column on-deck",
-  targeted: " targeted",  // generally appended
-  incorrect: " incorrect",  // generally appended
+  targeted: "targeted",  // generally appended
+  incorrect: "incorrect",  // generally appended
+  flipped: "flipped"  // generally appende
 };
 
 // TODO: Add player specific IDs to simplify targeting
@@ -84,8 +88,7 @@ const gameSpread = (onDeck, player) => {
   gameSpread.className = GameplayStyles.gameSpread;
   gameSpread.id = GameplayIDs.gameSpread;
 
-  gameSpread.appendChild(
-    GameCard(onDeck.Prompt, GameplayStyles.promptBase, GameplayStyles.promptFace));
+  gameSpread.appendChild(GamePrompt(onDeck.Prompt));
 
   gameSpread.appendChild(cardSpread(onDeck.CardSpread, player));
 
@@ -102,22 +105,66 @@ const cardSpread = (cardValues, player) => {
     cardSpread.appendChild(GameCard(values[i], GameplayStyles.cardBase, GameplayStyles.cardFace));
   }
 
-  cardSpread.children[GameState.Players[player].TargetIndex].className += GameplayStyles.targeted;
+  cardSpread.children[GameState.Players[player].TargetIndex]
+    .children[0]
+    .children[0].classList.toggle(GameplayStyles.targeted);
+  cardSpread.children[GameState.Players[player].TargetIndex].id = GameplayStyles.targeted;
 
   return cardSpread;
 }
 
-const GameCard = (value, baseStyle, faceStyle) => {
+const GameCard = (value) => {
+  let cardContainer = document.createElement('div');
+  cardContainer.className = GameplayStyles.cardContainer;
+
   let gameCard = document.createElement('div');
-  gameCard.className = baseStyle;
+  gameCard.className = GameplayStyles.card;
+
+  let faceBorder = document.createElement('div');
+  faceBorder.className = GameplayStyles.cardFaceBorder;
 
   let cardFace = document.createElement('div');
-  cardFace.className = faceStyle;
+  cardFace.className = GameplayStyles.cardFace;
   cardFace.innerHTML = value;
 
-  gameCard.appendChild(cardFace);
+  let backBorder = document.createElement('div');
+  backBorder.className = GameplayStyles.cardBackBorder;
 
-  return gameCard;
+  let cardBack = document.createElement('div');
+  cardBack.className = GameplayStyles.cardBack;
+
+  faceBorder.appendChild(cardFace);
+  backBorder.appendChild(cardBack);
+  
+  gameCard.appendChild(faceBorder);
+  gameCard.appendChild(backBorder);
+
+  cardContainer.appendChild(gameCard);
+
+  return cardContainer;
+}
+
+const GamePrompt = (value) => {
+  let base = document.createElement("div");
+  base.className = GameplayStyles.promptBase;
+
+  let face = document.createElement("div");
+  face.className = GameplayStyles.promptFace;
+  face.innerHTML = value;
+
+  base.appendChild(face);
+  return base;
+}
+
+const onDeckCard = () => {
+  let base = document.createElement("div");
+  base.className = GameplayStyles.onDeckBase;
+
+  let face = document.createElement("div");
+  face.className = GameplayStyles.onDeckBack;
+
+  base.appendChild(face);
+  return base;
 }
 
 const statusPanel = (onDeckCount) => {
@@ -141,8 +188,7 @@ const onDeck = (count) => {
   onDeck.id = GameplayIDs.onDeck;
 
   for (let i = 0; i < count - 1; i++) {
-    onDeck.appendChild(
-      GameCard('', GameplayStyles.onDeckBase, GameplayStyles.onDeckBack));
+    onDeck.appendChild(onDeckCard());
   }
 
   return onDeck;
@@ -152,7 +198,7 @@ const GetGameplayTarget = (player) => {
   return getPlayerGame(player)
     .querySelector("#" + GameplayIDs.gameSpread)
     .querySelector("#" + GameplayIDs.cardSpread)
-    .children[GameState.Players[player].TargetIndex];
+    .querySelector("#" + GameplayIDs.targeted);
 }
 
 const SetGameplayTarget = (player, direction) => {
@@ -168,12 +214,28 @@ const SetGameplayTarget = (player, direction) => {
     let newIndex = findNewTargetIndex(currentIndex, direction);
     GameState.Players[player].TargetIndex = newIndex;
 
-    cardSpread.children[currentIndex].className = 
-      cardSpread.children[currentIndex].className
-      .replace(GameplayStyles.targeted, "");
-    cardSpread.children[currentIndex].removeAttribute('id');
-    cardSpread.children[newIndex].className += GameplayStyles.targeted;
+    // remove old targeting
+    let oldTarget = cardSpread.querySelector("#" + GameplayIDs.targeted);
+
+    if (oldTarget.children[0].classList.contains(GameplayStyles.flipped)) {
+      oldTarget.children[0].children[1].classList.remove(GameplayStyles.targeted);
+    } else {
+      oldTarget.children[0].children[0].classList.remove(GameplayStyles.targeted);
+    }
+
+    oldTarget.removeAttribute('id');
+
+    // add new targeting
+    if (cardSpread.children[newIndex].children[0].classList.contains(GameplayStyles.flipped)) {
+      cardSpread.children[newIndex].children[0].children[1]
+        .classList.add(GameplayStyles.targeted);
+    } else {
+      cardSpread.children[newIndex].children[0].children[0]
+        .classList.add(GameplayStyles.targeted);
+    }
+
     cardSpread.children[newIndex].id = GameplayIDs.targeted;
+
   } else if (GameState.Players[player].TimedOut && lockout) {
     PlayEffect(AudioEffects.Incorrect);
   }
@@ -197,12 +259,12 @@ const SelectGameplayTarget = (player) => {
   {
     let selection = GetGameplayTarget(player);
 
-    if (selection.children[0].innerHTML != "")
+    if (selection.children[0].children[0].children[0].innerHTML != "")
     {
       GameState.Players[player].SelectedCount++;
 
       if (GameState.OnDeck[GameState.Players[player].CurrentDeckIndex]
-          .IsValidAnswer(selection.children[0].innerHTML))
+          .IsValidAnswer(selection.children[0].children[0].children[0].innerHTML))
       {
         PlayEffect(AudioEffects.Correct);
         GameState.Players[player].CorrectCount++;
@@ -215,8 +277,10 @@ const SelectGameplayTarget = (player) => {
         setPlayerTimeout(player);
       }
   
-      selection.children[0].className = GameplayStyles.cardBack;
-      selection.children[0].innerHTML = "";
+      selection.children[0].classList.add(GameplayStyles.flipped);
+      selection.children[0].children[0].classList.remove(GameplayStyles.targeted)
+      selection.children[0].children[1].classList.add(GameplayStyles.targeted)
+      selection.children[0].children[0].children[0].innerHTML = "";
   
       if (GameState.Players[player].CurrentRemainingCorrect === 0)
       {
@@ -243,18 +307,19 @@ const setPlayerTimeout = (player) => {
   GameState.Players[player].TimedOut = true;
 
   let playerTarget = GetGameplayTarget(player);
-  playerTarget.className = 
-    playerTarget.className
-    .replace(GameplayStyles.targeted, GameplayStyles.incorrect);
+
+  playerTarget.children[0].children[0].classList.remove(GameplayStyles.targeted);
+  playerTarget.children[0].children[1].classList.add(GameplayStyles.incorrect);
 
   setTimeout(() => {endPlayerTimeout(player)}, 1000);
 }
 
 const endPlayerTimeout = (player) => {
   let playerTarget = GetGameplayTarget(player);
-  playerTarget.className = 
-    playerTarget.className
-    .replace(GameplayStyles.incorrect, GameplayStyles.targeted);
+
+  playerTarget.children[0].children[1].classList.add(GameplayStyles.targeted);
+  playerTarget.children[0].children[1].classList.remove(GameplayStyles.incorrect);
+
   GameState.Players[player].TimedOut = false;
 }
 
@@ -312,7 +377,7 @@ const addOnDeck = (player) => {
     .querySelector("#" + GameplayIDs.statusPanel)
     .querySelector("#" + GameplayIDs.onDeck);
 
-  onDeck.appendChild(GameCard("", GameplayStyles.onDeckBase, GameplayStyles.onDeckBack));
+  onDeck.appendChild(onDeckCard());
 }
 // TODO: container resizes without a card
 const dropOnDeck = (player) => {
@@ -325,4 +390,4 @@ const dropOnDeck = (player) => {
   onDeck.removeChild(onDeck.firstChild);
 }
 
-export { GameplayStyles, GameplayScreen, SetGameplayTarget, SelectGameplayTarget, GameCard };
+export { GameplayStyles, GameplayScreen, SetGameplayTarget, SelectGameplayTarget, GameCard, GamePrompt };

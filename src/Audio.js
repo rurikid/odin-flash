@@ -60,6 +60,11 @@ const PlayMusic = (audioEffect, repeat) => {
 }
 
 const TransitionMusic = (audioEffect, repeat) => {
+  if (musicSource === null) {
+    PlayMusic(audioEffect, repeat);
+    return;
+  }
+
   if (audioBuffer[audioEffect] === undefined) {
     loadAudio(audioEffect);
   }
