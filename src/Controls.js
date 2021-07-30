@@ -120,7 +120,6 @@ const gameplayControls = (keystroke) => {
 }
 
 const gameOverControls = (keystroke) => {
-  PlayEffect(AudioEffects.Select);
   GameOverControls(keystroke);
 }
 

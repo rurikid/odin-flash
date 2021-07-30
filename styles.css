@@ -76,7 +76,9 @@ body {
 .title-screen h1 {
   font-size: 128px;
   font-family: 'Nova Cut';
-  color: var(--top);
+  background: radial-gradient(circle, rgba(153,98,16,1) 0%, rgba(255,200,118,1) 50%, rgba(204,149,67,1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .title-screen h2 {
@@ -124,6 +126,15 @@ body {
   margin-bottom: 8px;
 }
 
+.main-menu-screen h1,
+.game-options-screen h1, .game-options-screen h2,
+.game-over-screen h1, .game-over-screen h2 {
+  background: radial-gradient(circle, rgba(153,98,16,1) 0%, rgba(255,200,118,1) 50%, rgba(204,149,67,1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: normal;
+}
+
 .game-options-screen h1 {
   font-size: 64px;
   margin-bottom: 16px;
@@ -158,7 +169,7 @@ body {
 .prompt-card {
   height: var(--cardHeight);
   width: calc((var(--cardWidth) * 5) - (4 * 6px));
-  background-color: var(--top);
+  background: linear-gradient(90deg, rgba(255,200,118,1) 0%, rgba(204,149,67,1) 50%, rgba(153,98,16,1) 100%);
   margin: 3px;
   padding: 3px;
   clip-path: polygon(0 25%, 10% 0, 100% 0, 100% 75%, 90% 100%, 0 100%);
@@ -167,7 +178,7 @@ body {
 .prompt-face {
   height: 100%;
   width: 100%;
-  background-color: var(--londonSquare);
+  background: linear-gradient(90deg, rgba(154,168,181,1) 0%, rgba(128,142,155,1) 50%, rgba(103,117,130,1) 100%);
   font-family: 'Nova Cut';
   font-size: 32px;
   font-weight: bold;
@@ -176,19 +187,70 @@ body {
   clip-path: polygon(0 25%, 10% 0, 100% 0, 100% 75%, 90% 100%, 0 100%);
 }
 
-.card {
-  margin: 3px;
+.on-deck-card {
+  margin: -50px 3px 3px 3px;
   padding: 3px;
   height: var(--cardHeight);
   width: var(--cardWidth);
-  background-color: var(--top);
+  background: linear-gradient(90deg, rgba(255,200,118,1) 0%, rgba(204,149,67,1) 50%, rgba(153,98,16,1) 100%);
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+}
+
+.on-deck-back {
+  height: 100%;
+  width: 100%;
+  color: var(--red);
+  background: linear-gradient(90deg, rgba(255,200,118,1) 0%, rgba(204,149,67,1) 50%, rgba(153,98,16,1) 100%);
+  filter: brightness(80%);
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+}
+
+.vegvisir {
+  width: calc(var(--cardWidth) - 5px);
+}
+
+.card-container {
+  background-color: transparent;
+  width: var(--cardWidth);
+  height: var(--cardHeight);
+  perspective: 1000px;
+  padding: 6px;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face-border, .card-back-border {
+  height: 100%;
+  width: 100%;
+  padding: 3px;
+  backface-visibility: hidden;
+  background: linear-gradient(90deg, rgba(255,200,118,1) 0%, rgba(204,149,67,1) 50%, rgba(153,98,16,1) 100%);
+  position: absolute;
+}
+
+.card-face-border {
   clip-path: polygon(0 20%, 20% 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
 }
 
+.card-back-border {
+  transform: rotateY(180deg);
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+}
+
 .card-face {
+  background: linear-gradient(90deg, rgba(154,168,181,1) 0%, rgba(128,142,155,1) 50%, rgba(103,117,130,1) 100%);
   height: 100%;
   width: 100%;
-  background-color: var(--londonSquare);
   font-family: 'Nova Cut';
   font-size: 32px;
   font-weight: bold;
@@ -199,9 +261,9 @@ body {
 .card-back {
   height: 100%;
   width: 100%;
-  background-color: var(--top);
+  background: linear-gradient(90deg, rgba(255,200,118,1) 0%, rgba(204,149,67,1) 50%, rgba(153,98,16,1) 100%);
   filter: brightness(80%);
-  clip-path: polygon(0 20%, 20% 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
 }
 
 .targeted {
@@ -223,13 +285,13 @@ h2.targeted, li.targeted, h3.targeted {
 
 @keyframes targeting {
   0% {
-    background-color: var(--hintOfElusiveBlue);
+    background: var(--hintOfElusiveBlue);
   }
   50% {
-    background-color: var(--megaman);
+    background: var(--megaman);
   }
   100% {
-    background-color: var(--spiroDiscoBall);
+    background: var(--spiroDiscoBall);
   }
 }
 
@@ -247,13 +309,13 @@ h2.targeted, li.targeted, h3.targeted {
 
 @keyframes incorrect {
   0% {
-    background-color: var(--hintOfElusiveBlue);
+    background: var(--hintOfElusiveBlue);
   }
   50% {
-    background-color: var(--sunsetOrange);
+    background: var(--sunsetOrange);
   }
   100% {
-    background-color: var(--redOrange);
+    background: var(--redOrange);
   }
 }
 
@@ -284,10 +346,6 @@ h2.targeted, li.targeted, h3.targeted {
   font-weight: bold;
 }
 
-.on-deck-deck {
-  margin-top: -60px;
-}
-
 .game-over-screen {
   height: 100%;
   width: 100%;
@@ -296,7 +354,6 @@ h2.targeted, li.targeted, h3.targeted {
 
 .game-over-screen h1 {
   font-size: 64px;
-  color: var(--top);
 }
 
 .game-over-screen h2 {
@@ -315,8 +372,10 @@ h2.targeted, li.targeted, h3.targeted {
   align-self: flex-start;
 }
 
+/* TODO: this could auto-scroll */
 .prompt-list {
   margin-top: 25px;
+  max-height: calc(var(--cardHeight) * 5);
 }
 
 .player-results .prompt-card {

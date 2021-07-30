@@ -1,6 +1,7 @@
 import { GameConstants } from "../GameState.js";
-import { GameCard, GameplayStyles } from "./Gameplay.js";
+import { GamePrompt } from "./Gameplay.js";
 import { ScreenChange } from "../../index.js";
+import { PlayEffect, AudioEffects } from "../Audio.js";
 
 const GameOverScreenID = "gameOverScreen";
 const TitlePromptID = "titlePrompt";
@@ -84,8 +85,7 @@ const playerResults = (player, onDeck) => {
 
   for (let i = 0; i < player.CompletedPrompts; i++)
   {
-    promptList.appendChild(
-      GameCard(onDeck[i].Prompt, GameplayStyles.promptBase, GameplayStyles.promptFace));
+    promptList.appendChild(GamePrompt(onDeck[i].Prompt));
   }
 
   results.appendChild(promptList);
@@ -95,6 +95,7 @@ const playerResults = (player, onDeck) => {
 
 const GameOverControls = (keystroke) => {
   if (!lockout) {
+    PlayEffect(AudioEffects.Select);
     ScreenChange(GameConstants.CurrentScreen.Title);
   }
 }
