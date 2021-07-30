@@ -199,6 +199,11 @@ body {
 .card-back {
   height: 100%;
   width: 100%;
+  color: var(--red);
+  background-image: url("/images/vegvisir.svg");
+  background-size: var(--cardHeight);
+  background-repeat: no-repeat;
+  background-position: center;
   background-color: var(--top);
   filter: brightness(80%);
   clip-path: polygon(0 20%, 20% 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
