@@ -3,6 +3,7 @@ import { ControlConstants } from "../Controls.js";
 import { ShuffleArray } from "../Utilities.js";
 import { ScreenChange } from "../../index.js";
 import { PlayAudio, AudioEffects } from "../Audio.js";
+import { DeckFactory } from "../DeckFactory/DeckFactory.js";
 
 const GameplayStyles = {
   promptBase: "prompt-card",
@@ -269,16 +270,18 @@ const IncrementSpread = (player) => {
   let playerGame = getPlayerGame(player);
 
   GameState.Players[player].CurrentDeckIndex++;
-  GameState.Players[player].CurrentRemainingCorrect =
-    GameState.OnDeck[GameState.Players[player].CurrentDeckIndex].CorrectCount;
-  GameState.Players[player].PerfectSpread = true;
 
-  if (GameState.Players[player].CurrentDeckIndex > GameState.OnDeck.length) {
+  if (GameState.Players[player].CurrentDeckIndex >= GameState.OnDeck.length) {
+    console.log('push');
     GameState.OnDeck.push(DeckFactory(
       GameState.GameOptions.SelectedDecks,
       GameState.GameOptions.Difficulty,
       1));
   }
+
+  GameState.Players[player].CurrentRemainingCorrect =
+    GameState.OnDeck[GameState.Players[player].CurrentDeckIndex].CorrectCount;
+  GameState.Players[player].PerfectSpread = true;
 
   // TODO: create a better way to do this, this is a coincidental hack
   let oldGameSpread = playerGame.children[player];

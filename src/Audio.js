@@ -49,7 +49,7 @@ const StopAudio = (audioEffect) => {
   source.connect(audioContext.destination);
   // source.stop(0);
 
-  audioContext.suspend();
+  // audioContext.();
 }
 
 const loadAudio = (audioEffect) => {
