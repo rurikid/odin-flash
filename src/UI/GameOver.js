@@ -1,6 +1,7 @@
 import { GameConstants } from "../GameState.js";
 import { GamePrompt } from "./Gameplay.js";
 import { ScreenChange } from "../../index.js";
+import { PlayEffect, AudioEffects } from "../Audio.js";
 
 const GameOverScreenID = "gameOverScreen";
 const TitlePromptID = "titlePrompt";
@@ -94,6 +95,7 @@ const playerResults = (player, onDeck) => {
 
 const GameOverControls = (keystroke) => {
   if (!lockout) {
+    PlayEffect(AudioEffects.Select);
     ScreenChange(GameConstants.CurrentScreen.Title);
   }
 }

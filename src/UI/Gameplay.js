@@ -13,9 +13,10 @@ const GameplayStyles = {
   cardFaceBorder: "card-face-border",
   cardBackBorder: "card-back-border",
   cardFace: "flex-center card-face",
-  cardBack: "card-back",
+  cardBack: "flex-center card-back",
   onDeckBase: "on-deck-card",
-  onDeckBack: "on-deck-back",
+  onDeckBack: "flex-center on-deck-back",
+  vegvisir: "vegvisir",
   gameplayScreen: "flex-center flex-row gameplay-screen",
   playerOne: "flex-center flex-row player-one",
   playerTwo: "flex-center flex-row player-two",
@@ -133,6 +134,12 @@ const GameCard = (value) => {
   let cardBack = document.createElement('div');
   cardBack.className = GameplayStyles.cardBack;
 
+  let vegvisir = document.createElement("img");
+  vegvisir.className = GameplayStyles.vegvisir;
+  vegvisir.src = "./images/vegvisir.svg";
+
+  cardBack.appendChild(vegvisir);
+
   faceBorder.appendChild(cardFace);
   backBorder.appendChild(cardBack);
   
@@ -162,6 +169,12 @@ const onDeckCard = () => {
 
   let face = document.createElement("div");
   face.className = GameplayStyles.onDeckBack;
+
+  let vegvisir = document.createElement("img");
+  vegvisir.className = GameplayStyles.vegvisir;
+  vegvisir.src = "./images/vegvisir.svg";
+
+  face.appendChild(vegvisir);
 
   base.appendChild(face);
   return base;
