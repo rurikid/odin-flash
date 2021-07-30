@@ -2,7 +2,7 @@ import { GameConstants, GameState } from "../GameState.js";
 import { ControlConstants } from "../Controls.js";
 import { ShuffleArray } from "../Utilities.js";
 import { ScreenChange } from "../../index.js";
-import { PlayAudio, AudioEffects } from "../Audio.js";
+import { AudioEffects, PlayMusic, PlayEffect, StopMusic } from "../Audio.js";
 import { DeckFactory } from "../DeckFactory/DeckFactory.js";
 
 const GameplayStyles = {
@@ -38,8 +38,13 @@ const GameplayIDs = {
   targeted: "targeted"
 }
 
+let lockout = true;
+
 const GameplayScreen = (players, onDeck) => 
 {
+  lockout = true;
+  setTimeout(function() { lockout = false; }, 2000);
+
   let gameplayScreen = document.createElement("div");
   gameplayScreen.className = GameplayStyles.gameplayScreen;
   gameplayScreen.id = GameplayIDs.gameplayScreen;
@@ -151,9 +156,9 @@ const GetGameplayTarget = (player) => {
 }
 
 const SetGameplayTarget = (player, direction) => {
-  if (!GameState.Players[player].TimedOut)
+  if (!GameState.Players[player].TimedOut && !lockout)
   {
-    PlayAudio(AudioEffects.Target, false);
+    PlayEffect(AudioEffects.Target);
 
     let cardSpread = getPlayerGame(player)
     .querySelector("#" + GameplayIDs.gameSpread)
@@ -169,8 +174,8 @@ const SetGameplayTarget = (player, direction) => {
     cardSpread.children[currentIndex].removeAttribute('id');
     cardSpread.children[newIndex].className += GameplayStyles.targeted;
     cardSpread.children[newIndex].id = GameplayIDs.targeted;
-  } else {
-    PlayAudio(AudioEffects.Incorrect);
+  } else if (GameState.Players[player].TimedOut && lockout) {
+    PlayEffect(AudioEffects.Incorrect);
   }
 }
 
@@ -188,7 +193,7 @@ const findNewTargetIndex = (index, direction) => {
 }
 
 const SelectGameplayTarget = (player) => {
-  if (!GameState.Players[player].TimedOut)
+  if (!GameState.Players[player].TimedOut && !lockout)
   {
     let selection = GetGameplayTarget(player);
 
@@ -199,14 +204,14 @@ const SelectGameplayTarget = (player) => {
       if (GameState.OnDeck[GameState.Players[player].CurrentDeckIndex]
           .IsValidAnswer(selection.children[0].innerHTML))
       {
-        PlayAudio(AudioEffects.Correct, false);
+        PlayEffect(AudioEffects.Correct);
         GameState.Players[player].CorrectCount++;
         IncrementScore(player, 100);
         GameState.Players[player].CurrentRemainingCorrect--;
       }
       else
       {
-        PlayAudio(AudioEffects.Incorrect, false);
+        PlayEffect(AudioEffects.Incorrect);
         setPlayerTimeout(player);
       }
   
@@ -261,7 +266,7 @@ const getPlayerGame = (player) => {
 }
 
 const IncrementSpread = (player) => {
-  PlayAudio(AudioEffects.NewDeck, false);
+  PlayEffect(AudioEffects.NewDeck);
 
   dropOnDeck(player);
   addOnDeck(player === GameConstants.PlayerOne ? 

@@ -1,12 +1,12 @@
 const AudioEffects = {
-  TitleMusic: '../audio/OfGodsAndPhilosophers/OfGodsAndPhilosophers_Short1(loop)(120).wav',
-  Target: '../audio/TomWinandySFX_UI_ScifiTech_Button-Select_01.wav',
-  Select: '../audio/TomWinandySFX_UI_ScifiTech_Button-Select_05.wav',
-  Correct: '../audio/TomWinandySFX_UI_ScifiTech_Confirm_03.wav',
-  Incorrect: '../audio/TomWinandySFX_UI_ScifiTech_Cancel_01.wav',
-  NewDeck: '../audio/TomWinandySFX_UI_SciFiTech_Swipe_14.wav',
-  GameOverMusic: '../audio/OfGodsAndPhilosophers/OfGodsAndPhilosophers_Short1(loop)(120).wav',
-  GameplayMusic:'../audio/OfGodsAndPhilosophers/OfGodsAndPhilosophers(loop)(120).wav',
+  TitleMusic: '../audio/TitleMusic.wav',
+  Target: '../audio/TargetEffect.wav',
+  Select: '../audio/SelectEffect.wav',
+  Correct: '../audio/CorrectEffect.wav',
+  Incorrect: '../audio/IncorrectEffect.wav',
+  NewDeck: '../audio/NewDeckEffect.wav',
+  GameOverMusic: '../audio/TitleMusic.wav',
+  GameplayMusic:'../audio/GameplayMusic.wav',
 }
 
 const audioContext = new AudioContext();
@@ -19,8 +19,11 @@ let audioBuffer = {
   Incorrect: null,
   NewDeck: null,
   GameOverMusic: null,
-  GameplayMusic: null
+  GameplayMusic: null,
+  Test: null
 }
+
+let musicSource = null;
 
 const InitAudio = () => {
   for (let key in AudioEffects) {
@@ -28,28 +31,69 @@ const InitAudio = () => {
   }
 }
 
-const PlayAudio = (audioEffect, repeat) => {
+const PlayEffect = (audioEffect) => {
   if (audioBuffer[audioEffect] === undefined) {
     loadAudio(audioEffect);
   }
 
-  console.log(audioEffect);
+  let gainNode = audioContext.createGain();
 
-  var source = audioContext.createBufferSource();
-  source.loop = repeat;
+  let source = audioContext.createBufferSource();
   source.buffer = audioBuffer[audioEffect];
-  source.connect(audioContext.destination);
+  source.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+  gainNode.gain.value = 2;
+
   source.start(0);
 }
 
-const StopAudio = (audioEffect) => {
-  var source = audioContext.createBufferSource();
+const PlayMusic = (audioEffect, repeat) => {
+  if (audioBuffer[audioEffect] === undefined) {
+    loadAudio(audioEffect);
+  }
 
-  source.buffer = audioBuffer[audioEffect];
-  source.connect(audioContext.destination);
-  // source.stop(0);
+  musicSource = audioContext.createBufferSource();
+  musicSource.loop = repeat;
+  musicSource.buffer = audioBuffer[audioEffect];
+  musicSource.connect(audioContext.destination);
+  musicSource.start(0);
+}
 
-  // audioContext.();
+const TransitionMusic = (audioEffect, repeat) => {
+  if (audioBuffer[audioEffect] === undefined) {
+    loadAudio(audioEffect);
+  }
+
+  let newSource = audioContext.createBufferSource();
+  newSource.loop = repeat;
+  newSource.buffer = audioBuffer[audioEffect];
+
+  let newGain = audioContext.createGain();
+  let oldGain = audioContext.createGain();
+
+  newSource.connect(newGain);
+  musicSource.connect(oldGain);
+
+  newGain.connect(audioContext.destination);
+  oldGain.connect(audioContext.destination);
+
+  newGain.gain.setValueAtTime(0, audioContext.currentTime);
+  newSource.start(0);
+
+  oldGain.gain.linearRampToValueAtTime(-1, audioContext.currentTime + 2);
+  newGain.gain.linearRampToValueAtTime(1, audioContext.currentTime + 2);
+  setTimeout(function() { 
+    musicSource = newSource;
+  }, 3000);
+}
+
+const StopMusic = () => {
+  let gainNode = audioContext.createGain();
+
+  musicSource.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+
+  gainNode.gain.linearRampToValueAtTime(-1, audioContext.currentTime + 2);
 }
 
 const loadAudio = (audioEffect) => {
@@ -66,4 +110,4 @@ const loadAudio = (audioEffect) => {
   request.send();
 }
 
-export { InitAudio, AudioEffects, PlayAudio, StopAudio };
+export { InitAudio, AudioEffects, PlayMusic, PlayEffect, StopMusic, TransitionMusic };

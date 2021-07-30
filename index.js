@@ -6,7 +6,7 @@ import { DeckFactory } from "./src/DeckFactory/DeckFactory.js";
 import { GameOverScreen } from "./src/UI/GameOver.js";
 import { MainMenuScreen } from "./src/UI/MainMenu.js";
 import { GameOptionsScreen } from "./src/UI/GameOptions.js";
-import { InitAudio, AudioEffects, PlayAudio, StopAudio } from "./src/Audio.js";
+import { InitAudio, AudioEffects, PlayMusic, PlayEffect, StopMusic, TransitionMusic } from "./src/Audio.js";
 
 console.log('Hello Odin!');
 
@@ -23,6 +23,8 @@ const ScreenChange = (screen) => {
       newScreen = GameOptionsScreen();
       break;
     case GameConstants.CurrentScreen.Gameplay:
+      TransitionMusic(AudioEffects.GameplayMusic, true);
+
       // TODO: More elegant way to deal with starting decks/ondeck
       GameState.OnDeck = DeckFactory(GameState.GameOptions.SelectedDecks,
         GameState.GameOptions.Difficulty,
@@ -38,11 +40,16 @@ const ScreenChange = (screen) => {
       GameState.Players[1].CurrentRemainingCorrect =
         GameState.OnDeck[GameState.Players[1].CurrentDeckIndex].CorrectCount;
 
-        newScreen = GameplayScreen(GameState.CurrentPlayers, GameState.OnDeck);
+      GameState.Players[0].TargetIndex = 15;
+      GameState.Players[1].TargetIndex = 15;
+
+      newScreen = GameplayScreen(GameState.CurrentPlayers, GameState.OnDeck);
       break;
     case GameConstants.CurrentScreen.Gameover:
-        newScreen = 
-          GameOverScreen(GameState.CurrentPlayers, GameState.Players, GameState.OnDeck);
+      TransitionMusic(AudioEffects.GameOverMusic, true);
+
+      newScreen = 
+        GameOverScreen(GameState.CurrentPlayers, GameState.Players, GameState.OnDeck);
       break;
   }
 
@@ -54,8 +61,8 @@ const ScreenChange = (screen) => {
 }
 
 InitAudio();
-setTimeout(function() { PlayAudio(AudioEffects.TitleMusic, true); }, 500);
-setTimeout(function() { StopAudio(AudioEffects.TitleMusic); }, 5000);
+setTimeout(function() { PlayMusic(AudioEffects.TitleMusic, true); }, 500);
+
 InitControls();
 
 ScreenChange(GameConstants.CurrentScreen.Title);

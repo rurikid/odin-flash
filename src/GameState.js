@@ -76,7 +76,7 @@ let GameState = {
     SecondPlayer: GameConstants.SecondPlayer.Human,
     // SurvivalLives: GameConstants.SurvivalLives.Five,
     // TimeAttackTimer: GameConstants.TimeAttackTimer.Sixty,
-    TwoPlayerDecks: GameConstants.TwoPlayerDecks.Ten,
+    TwoPlayerDecks: GameConstants.TwoPlayerDecks.Five,
     SelectedDecks: [DeckTypes.Primes, DeckTypes.Multiples, DeckTypes.Factors],
     Difficulty: GameConstants.Difficulty.Beginner
   },
