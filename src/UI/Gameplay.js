@@ -412,7 +412,7 @@ const addOnDeck = (player) => {
 
   onDeck.appendChild(onDeckCard());
 }
-// TODO: container resizes without a card
+
 const dropOnDeck = (player) => {
   GameState.Players[player].OnDeckCount--;
 
