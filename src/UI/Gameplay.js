@@ -111,7 +111,28 @@ const cardSpread = (cardValues, player) => {
     .children[0].classList.toggle(GameplayStyles.targeted);
   cardSpread.children[GameState.Players[player].TargetIndex].id = GameplayStyles.targeted;
 
+  flipSpread(cardSpread, false, false);
+  setTimeout(function() { flipSpread(cardSpread, true) }, 1000)
+
   return cardSpread;
+}
+
+const flipSpread = (spread, isFaceUp, playEffect = true) => {
+  if (playEffect) {
+    PlayEffect(AudioEffects.NewDeck);
+  }
+
+  if (isFaceUp) {
+    for (let index of spread.children) {
+      index.children[0].classList.remove(GameplayStyles.flipped);
+    }
+  } else {
+    for (let index of spread.children) {
+      if (!index.children[0].classList.contains(GameplayStyles.flipped)) {
+        index.children[0].classList.add(GameplayStyles.flipped);
+      }
+    }
+  }
 }
 
 const GameCard = (value) => {
@@ -308,8 +329,9 @@ const SelectGameplayTarget = (player) => {
           ScreenChange(GameConstants.CurrentScreen.Gameover);
           return;
         }
+        flipSpread(getPlayerGame(player).children[player].children[1], false, true);
 
-        IncrementSpread(player);
+        setTimeout(function() { IncrementSpread(player); }, 1000);
       }
     }
   }
@@ -344,8 +366,6 @@ const getPlayerGame = (player) => {
 }
 
 const IncrementSpread = (player) => {
-  PlayEffect(AudioEffects.NewDeck);
-
   dropOnDeck(player);
   addOnDeck(player === GameConstants.PlayerOne ? 
     GameConstants.PlayerTwo : GameConstants.PlayerOne);
