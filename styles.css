@@ -39,7 +39,7 @@ html {
 }
 
 header {
-  width: 100%;
+  width: var(--canvasWidth);
 }
 
 header h1 {
