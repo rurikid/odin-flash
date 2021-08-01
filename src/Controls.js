@@ -44,15 +44,15 @@ const titleControls = (keystroke) => {
 
 const mainMenuControls = (keystroke) => {
   switch (keystroke) {
-    case "ArrowUp":
+    case "KeyW":
       PlayEffect(AudioEffects.Target);
       MainMenuControls(ControlConstants.Up);
       break;
-    case "ArrowDown":
+    case "KeyS":
       PlayEffect(AudioEffects.Target);
       MainMenuControls(ControlConstants.Down);
       break;
-    case "Enter":
+    case "Space":
       PlayEffect(AudioEffects.Select);
       MainMenuControls(ControlConstants.Select);
       break;
@@ -61,23 +61,23 @@ const mainMenuControls = (keystroke) => {
 
 const gameOptionsControls = (keystroke) => {
   switch (keystroke) {
-    case "ArrowUp":
+    case "KeyW":
       PlayEffect(AudioEffects.Target);
       GameOptionsControls(ControlConstants.Up);
       break;
-    case "ArrowDown":
+    case "KeyS":
       PlayEffect(AudioEffects.Target);
       GameOptionsControls(ControlConstants.Down);
       break;
-    case "ArrowLeft":
+    case "KeyA":
       PlayEffect(AudioEffects.Target);
       GameOptionsControls(ControlConstants.Left);
       break;
-    case "ArrowRight":
+    case "KeyD":
       PlayEffect(AudioEffects.Target);
       GameOptionsControls(ControlConstants.Right);
       break;
-    case "Enter":
+    case "Space":
       PlayEffect(AudioEffects.Select);
       GameOptionsControls(ControlConstants.Select);
       break;
@@ -87,34 +87,42 @@ const gameOptionsControls = (keystroke) => {
 const gameplayControls = (keystroke) => {
   switch (keystroke) {
     case "ArrowUp":
-      SetGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Up);
+      SetGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Up,
+                        GameState.GameOptions.GameMode);
       break;
     case "ArrowDown":
-      SetGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Down);
+      SetGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Down,
+                        GameState.GameOptions.GameMode);
       break;
     case "ArrowLeft":
-      SetGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Left);
+      SetGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Left,
+                        GameState.GameOptions.GameMode);
       break;
     case "ArrowRight":
-      SetGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Right);
+      SetGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Right,
+                        GameState.GameOptions.GameMode);
       break;
     case "Enter":
-      SelectGameplayTarget(GameConstants.PlayerTwo, ControlConstants.Select);
+      SelectGameplayTarget(GameConstants.PlayerTwo, GameState.GameOptions.GameMode);
       break;
     case "KeyW":
-      SetGameplayTarget(GameConstants.PlayerOne, ControlConstants.Up);
+      SetGameplayTarget(GameConstants.PlayerOne, ControlConstants.Up,
+                        GameState.GameOptions.GameMode);
       break;
     case "KeyS":
-      SetGameplayTarget(GameConstants.PlayerOne, ControlConstants.Down);
+      SetGameplayTarget(GameConstants.PlayerOne, ControlConstants.Down,
+                        GameState.GameOptions.GameMode);
       break;
     case "KeyA":
-      SetGameplayTarget(GameConstants.PlayerOne, ControlConstants.Left);
+      SetGameplayTarget(GameConstants.PlayerOne, ControlConstants.Left,
+                        GameState.GameOptions.GameMode);
       break;
     case "KeyD":
-      SetGameplayTarget(GameConstants.PlayerOne, ControlConstants.Right);
+      SetGameplayTarget(GameConstants.PlayerOne, ControlConstants.Right,
+                        GameState.GameOptions.GameMode);
       break;
     case "Space":
-      SelectGameplayTarget(GameConstants.PlayerOne, ControlConstants.Select);
+      SelectGameplayTarget(GameConstants.PlayerOne, GameState.GameOptions.GameMode);
       break;
   }
 }

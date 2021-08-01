@@ -1,4 +1,4 @@
-import { GameConstants, GameState } from "./src/GameState.js";
+import { GameConstants, GameState, PlayerSetup } from "./src/GameState.js";
 import { InitControls } from "./src/Controls.js";
 import { TitleScreen } from "./src/UI/Title.js";
 import { GameplayScreen } from "./src/UI/Gameplay.js";
@@ -6,7 +6,7 @@ import { DeckFactory } from "./src/DeckFactory/DeckFactory.js";
 import { GameOverScreen } from "./src/UI/GameOver.js";
 import { MainMenuScreen } from "./src/UI/MainMenu.js";
 import { GameOptionsScreen } from "./src/UI/GameOptions.js";
-import { InitAudio, AudioEffects, PlayMusic, PlayEffect, StopMusic, TransitionMusic } from "./src/Audio.js";
+import { InitAudio, AudioEffects, PlayMusic, TransitionMusic } from "./src/Audio.js";
 
 console.log('Hello Odin!');
 
@@ -30,20 +30,9 @@ const ScreenChange = (screen) => {
         GameState.GameOptions.Difficulty,
         GameState.GameOptions.TwoPlayerDecks + 1);
 
-      // TODO: this needs to be instantiated in game options
-      GameState.Players[0].OnDeckCount = GameState.GameOptions.TwoPlayerDecks;
-      GameState.Players[1].OnDeckCount = GameState.GameOptions.TwoPlayerDecks;
+      PlayerSetup();
 
-      // TODO: move this to a better spot
-      GameState.Players[0].CurrentRemainingCorrect =
-        GameState.OnDeck[GameState.Players[0].CurrentDeckIndex].CorrectCount;
-      GameState.Players[1].CurrentRemainingCorrect =
-        GameState.OnDeck[GameState.Players[1].CurrentDeckIndex].CorrectCount;
-
-      GameState.Players[0].TargetIndex = 15;
-      GameState.Players[1].TargetIndex = 15;
-
-      newScreen = GameplayScreen(GameState.CurrentPlayers, GameState.OnDeck);
+      newScreen = GameplayScreen(GameState.GameOptions.GameMode, GameState.OnDeck);
       break;
     case GameConstants.CurrentScreen.Gameover:
       TransitionMusic(AudioEffects.GameOverMusic, true);
