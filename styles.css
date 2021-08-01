@@ -38,6 +38,14 @@ html {
   display: flex;
 }
 
+header {
+  width: 100%;
+}
+
+header h1 {
+  color: var(--top);
+}
+
 body {
   width: 100%;
 }
@@ -58,6 +66,12 @@ body {
   justify-items: center;
   justify-content: center;
   align-content: center;
+}
+
+.controls {
+  width: 100%;
+  justify-content: space-around;
+  font-family: "Nova Cut";
 }
 
 .game-canvas {

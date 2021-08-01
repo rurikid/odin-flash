@@ -8,18 +8,6 @@ const GameOptionsScreenID = "gameOptionsScreen";
 const ReturnMainMenu = "returnMainMenu";
 
 const GameOptions = {
-  // GameMode: {
-    // StateKey: "GameMode",
-  //   Title: "Game Mode",
-  //   Strings: {
-  //     Survival: "Survival",
-  //     TimeAttack: "Time Attack",
-  //     TwoPlayer: "Two Player"
-  //   },
-  //   Values : {
-  //     ...GameState.GameMode
-  //   }
-  // },
   Difficulty: {
     StateKey: "Difficulty",
     Title: "Difficulty",
@@ -33,30 +21,32 @@ const GameOptions = {
       ...GameConstants.Difficulty
     }
   },
-  // SurvivalLives: {
-    // StateKey: "SurvivalLives",
-  //   Title: "Survival Lives",
-  //   Strings: {
-  //     Three: "Three",
-  //     Five: "Five",
-  //     Seven: "Seven"
-  //   },
-  //   Values : {
-  //     ...GameState.SurvivalLives
-  //   }
-  // },
-  // TimeAttackTimer: {
-      // StateKey: "TimeAttackTimer",
-  //   Title: "Time Attack Timer",
-  //   Strings: {
-  //     Thirty: "Thirty",
-  //     Sixty: "Sixty",
-  //     Ninety: "Ninety"
-  //   },
-  //   Values : {
-  //     ...GameState.TimeAttackTimer
-  //   }
-  // },
+  SurvivalLives: {
+    StateKey: "SurvivalLives",
+    Title: "Survival Lives",
+    Strings: {
+      Three: "Three",
+      Five: "Five",
+      Seven: "Seven",
+      Nine: "Nine"
+    },
+    Values : {
+      ...GameConstants.SurvivalLives
+    }
+  },
+  TimeAttackTimer: {
+    StateKey: "TimeAttackTimer",
+    Title: "Time Attack Timer",
+    Strings: {
+      Thirty: "Thirty",
+      Sixty: "Sixty",
+      Ninety: "Ninety",
+      OneTwenty: "One-Twenty"
+    },
+    Values : {
+      ...GameConstants.TimeAttackTimer
+    }
+  },
   TwoPlayerDecks: {
     StateKey: "TwoPlayerDecks",
     Title: "Two Player Decks",
@@ -105,7 +95,7 @@ const getGameOptionList = (options) => {
   let list = document.createElement('ul');
   list.className = "flex-center flex-row";
   list.id = options.StateKey;
-  for (var option in options.Strings) {
+  for (let option in options.Strings) {
     let listItem = document.createElement('li');
     listItem.innerHTML = options.Strings[option];
     listItem.id = option;
@@ -132,6 +122,8 @@ const getGameOptionList = (options) => {
 }
 
 const GameOptionsScreen = () => {
+  console.log(GameState.GameOptions);
+
   targetIndices.vertical = 1;
   targetIndices.horizontal = 0;
 
@@ -211,14 +203,21 @@ const selectTarget = () => {
 
   switch (targetParent.id) {
     case GameOptions.Difficulty.StateKey:
+    case GameOptions.SurvivalLives.StateKey:
+    case GameOptions.TimeAttackTimer.StateKey:
     case GameOptions.TwoPlayerDecks.StateKey:
       targetParent
         .getElementsByClassName('selected')[0]
         .removeAttribute('class');
       target.className = ('selected targeted');
 
-      GameState.GameOptions[targetParent.id] = 
-        GameOptions[targetParent.id].Values[target.innerHTML];
+      if (target.innerHTML === GameOptions.TimeAttackTimer.Strings.OneTwenty) {
+        GameState.GameOptions[targetParent.id] =
+          GameOptions[targetParent.id].Values["OneTwenty"];
+      } else {
+        GameState.GameOptions[targetParent.id] = 
+          GameOptions[targetParent.id].Values[target.innerHTML];
+      }
       break;
     case GameOptions.DeckTypes.StateKey:
       if (target.classList.contains('selected')) {

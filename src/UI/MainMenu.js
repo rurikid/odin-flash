@@ -98,15 +98,18 @@ const MainMenuControls = (keystroke) => {
   {
     switch (menuOptions[targetIndex].id) {
       case MainMenuOptions.Survival.ContainerID:
-        GameState.CurrentGameMode = GameConstants.GameMode.Survival;
+        GameState.GameOptions.GameMode = GameConstants.GameMode.Survival;
+        GameState.CurrentPlayers = GameConstants.CurrentPlayers.One;
         ScreenChange(GameConstants.CurrentScreen.Gameplay);
         break;
       case MainMenuOptions.TimeAttack.ContainerID:
-        GameState.CurrentGameMode = GameConstants.GameMode.TimeAttack;
+        GameState.GameOptions.GameMode = GameConstants.GameMode.TimeAttack;
+        GameState.CurrentPlayers = GameConstants.CurrentPlayers.One;
         ScreenChange(GameConstants.CurrentScreen.Gameplay);
         break;
       case MainMenuOptions.TwoPlayer.ContainerID:
-        GameState.CurrentGameMode = GameConstants.GameMode.TwoPlayer;
+        GameState.GameOptions.GameMode = GameConstants.GameMode.TwoPlayer;
+        GameState.CurrentPlayers = GameConstants.CurrentPlayers.Two;
         ScreenChange(GameConstants.CurrentScreen.Gameplay);
         break;
       case MainMenuOptions.GameOptions.ContainerID:

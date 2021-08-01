@@ -2,7 +2,7 @@ import { GameConstants, GameState } from "../GameState.js";
 import { ControlConstants } from "../Controls.js";
 import { ShuffleArray } from "../Utilities.js";
 import { ScreenChange } from "../../index.js";
-import { AudioEffects, PlayMusic, PlayEffect, StopMusic } from "../Audio.js";
+import { AudioEffects, PlayEffect } from "../Audio.js";
 import { DeckFactory } from "../DeckFactory/DeckFactory.js";
 
 const GameplayStyles = {
@@ -25,9 +25,9 @@ const GameplayStyles = {
   statusPanel: "flex-center flex-column status-panel",
   gameStatus: "flex-center flex-column game-status",
   onDeck: "flex-column on-deck",
-  targeted: "targeted",  // generally appended
-  incorrect: "incorrect",  // generally appended
-  flipped: "flipped"  // generally appende
+  targeted: "targeted",
+  incorrect: "incorrect",
+  flipped: "flipped"
 };
 
 // TODO: Add player specific IDs to simplify targeting
@@ -45,7 +45,7 @@ const GameplayIDs = {
 
 let lockout = true;
 
-const GameplayScreen = (players, onDeck) => 
+const GameplayScreen = (gameMode, onDeck) => 
 {
   lockout = true;
   setTimeout(function() { lockout = false; }, 2000);
@@ -54,29 +54,56 @@ const GameplayScreen = (players, onDeck) =>
   gameplayScreen.className = GameplayStyles.gameplayScreen;
   gameplayScreen.id = GameplayIDs.gameplayScreen;
 
-  gameplayScreen.appendChild(playerGame(GameConstants.PlayerOne, onDeck));
-  if (players > 1)
+  gameplayScreen.appendChild(playerGame(gameMode, onDeck, GameConstants.PlayerOne));
+
+  if (gameMode === GameConstants.GameMode.TwoPlayer)
   {
-    gameplayScreen.appendChild(playerGame(GameConstants.PlayerTwo, onDeck));
+    gameplayScreen.appendChild(playerGame(gameMode, onDeck, GameConstants.PlayerTwo));
+  }
+  if (gameMode === GameConstants.GameMode.TimeAttack) {
+    setTimeout(function() {
+      SurvivalTimer(GameConstants.PlayerOne);
+    }, 3000);
   }
 
   return gameplayScreen;
 }
 
-const playerGame = (player, onDeck) => {
+const SurvivalTimer = (player) => {
+  if (GameState.CurrentTimer === 0) {
+    ScreenChange(GameConstants.CurrentScreen.Gameover);
+    return;
+  }
+
+  decrementTimer(player);
+
+  setTimeout(function() {
+    SurvivalTimer(player);
+  }, 1000);
+}
+
+const decrementTimer = (player) => {
+  GameState.CurrentTimer -= 1;
+
+  getPlayerGame(player)
+    .querySelector("#" + GameplayIDs.statusPanel).children[0]
+    .children[3].innerHTML = GameState.CurrentTimer;
+}
+
+const playerGame = (gameMode, onDeck, player) => {
   let playerArea = document.createElement("div");
 
   if (player === GameConstants.PlayerOne) {
     playerArea.className = GameplayStyles.playerOne;
     playerArea.id = GameplayIDs.playerOne;
     playerArea.appendChild(gameSpread(onDeck[0], player));
-    playerArea.appendChild(statusPanel(onDeck.length));
+    playerArea.appendChild(statusPanel(gameMode, onDeck.length));
   }
   else
   {
     playerArea.className = GameplayStyles.playerTwo;
     playerArea.id = GameplayIDs.playerTwo;
-    playerArea.appendChild(statusPanel(onDeck.length));
+    playerArea.appendChild(statusPanel(gameMode, onDeck.length));
     playerArea.appendChild(gameSpread(onDeck[0], player));
   }
 
@@ -201,7 +228,7 @@ const onDeckCard = () => {
   return base;
 }
 
-const statusPanel = (onDeckCount) => {
+const statusPanel = (gameMode, onDeckCount) => {
   let statusPanel = document.createElement('div');
   statusPanel.className = GameplayStyles.statusPanel;
   statusPanel.id = GameplayIDs.statusPanel;
@@ -210,8 +237,21 @@ const statusPanel = (onDeckCount) => {
   gameStatus.className = GameplayStyles.gameStatus;
   gameStatus.innerHTML = "<h1>Score</h1><p>0</p>";
 
+  let deckCount = 0;
+  switch (gameMode) {
+    case GameConstants.GameMode.Survival:
+      gameStatus.innerHTML += `<h1>Lives</h1><p>${GameState.GameOptions.SurvivalLives}</p>`;
+      break;
+    case GameConstants.GameMode.TimeAttack:
+      gameStatus.innerHTML += `<h1>Timer</h1><p>${GameState.GameOptions.TimeAttackTimer}</p>`;
+      break;
+    case GameConstants.GameMode.TwoPlayer:
+      deckCount = onDeckCount;
+      break;
+  }  
+
   statusPanel.appendChild(gameStatus);
-  statusPanel.appendChild(onDeck(onDeckCount));
+  statusPanel.appendChild(onDeck(deckCount));
 
   return statusPanel;
 }
@@ -235,43 +275,47 @@ const GetGameplayTarget = (player) => {
     .querySelector("#" + GameplayIDs.targeted);
 }
 
-const SetGameplayTarget = (player, direction) => {
-  if (!GameState.Players[player].TimedOut && !lockout)
-  {
-    PlayEffect(AudioEffects.Target);
+const SetGameplayTarget = (player, direction, gameMode) => {
+  if (gameMode === GameConstants.GameMode.TwoPlayer ||
+      player === GameConstants.PlayerOne) {
 
-    let cardSpread = getPlayerGame(player)
-    .querySelector("#" + GameplayIDs.gameSpread)
-    .querySelector("#" + GameplayIDs.cardSpread);
-
-    let currentIndex = GameState.Players[player].TargetIndex;
-    let newIndex = findNewTargetIndex(currentIndex, direction);
-    GameState.Players[player].TargetIndex = newIndex;
-
-    // remove old targeting
-    let oldTarget = cardSpread.querySelector("#" + GameplayIDs.targeted);
-
-    if (oldTarget.children[0].classList.contains(GameplayStyles.flipped)) {
-      oldTarget.children[0].children[1].classList.remove(GameplayStyles.targeted);
-    } else {
-      oldTarget.children[0].children[0].classList.remove(GameplayStyles.targeted);
+    if (!GameState.Players[player].TimedOut && !lockout)
+    {
+      PlayEffect(AudioEffects.Target);
+  
+      let cardSpread = getPlayerGame(player)
+      .querySelector("#" + GameplayIDs.gameSpread)
+      .querySelector("#" + GameplayIDs.cardSpread);
+  
+      let currentIndex = GameState.Players[player].TargetIndex;
+      let newIndex = findNewTargetIndex(currentIndex, direction);
+      GameState.Players[player].TargetIndex = newIndex;
+  
+      // remove old targeting
+      let oldTarget = cardSpread.querySelector("#" + GameplayIDs.targeted);
+  
+      if (oldTarget.children[0].classList.contains(GameplayStyles.flipped)) {
+        oldTarget.children[0].children[1].classList.remove(GameplayStyles.targeted);
+      } else {
+        oldTarget.children[0].children[0].classList.remove(GameplayStyles.targeted);
+      }
+  
+      oldTarget.removeAttribute('id');
+  
+      // add new targeting
+      if (cardSpread.children[newIndex].children[0].classList.contains(GameplayStyles.flipped)) {
+        cardSpread.children[newIndex].children[0].children[1]
+          .classList.add(GameplayStyles.targeted);
+      } else {
+        cardSpread.children[newIndex].children[0].children[0]
+          .classList.add(GameplayStyles.targeted);
+      }
+  
+      cardSpread.children[newIndex].id = GameplayIDs.targeted;
+  
+    } else if (GameState.Players[player].TimedOut && lockout) {
+      PlayEffect(AudioEffects.Incorrect);
     }
-
-    oldTarget.removeAttribute('id');
-
-    // add new targeting
-    if (cardSpread.children[newIndex].children[0].classList.contains(GameplayStyles.flipped)) {
-      cardSpread.children[newIndex].children[0].children[1]
-        .classList.add(GameplayStyles.targeted);
-    } else {
-      cardSpread.children[newIndex].children[0].children[0]
-        .classList.add(GameplayStyles.targeted);
-    }
-
-    cardSpread.children[newIndex].id = GameplayIDs.targeted;
-
-  } else if (GameState.Players[player].TimedOut && lockout) {
-    PlayEffect(AudioEffects.Incorrect);
   }
 }
 
@@ -288,50 +332,74 @@ const findNewTargetIndex = (index, direction) => {
   }
 }
 
-const SelectGameplayTarget = (player) => {
-  if (!GameState.Players[player].TimedOut && !lockout)
-  {
-    let selection = GetGameplayTarget(player);
+const decrementLives = (player) => {
+  GameState.Players[player].Lives -= 1;
 
-    if (selection.children[0].children[0].children[0].innerHTML != "")
+  getPlayerGame(player)
+    .querySelector("#" + GameplayIDs.statusPanel).children[0]
+    .children[3].innerHTML = GameState.Players[player].Lives;
+}
+
+const SelectGameplayTarget = (player, gameMode) => {
+  if (gameMode === GameConstants.GameMode.TwoPlayer ||
+      player === GameConstants.PlayerOne) {
+
+    if (!GameState.Players[player].TimedOut && !lockout)
     {
-      GameState.Players[player].SelectedCount++;
-
-      if (GameState.OnDeck[GameState.Players[player].CurrentDeckIndex]
-          .IsValidAnswer(selection.children[0].children[0].children[0].innerHTML))
-      {
-        PlayEffect(AudioEffects.Correct);
-        GameState.Players[player].CorrectCount++;
-        IncrementScore(player, 100);
-        GameState.Players[player].CurrentRemainingCorrect--;
-      }
-      else
-      {
-        PlayEffect(AudioEffects.Incorrect);
-        setPlayerTimeout(player);
-      }
+      let selection = GetGameplayTarget(player);
   
-      selection.children[0].classList.add(GameplayStyles.flipped);
-      selection.children[0].children[0].classList.remove(GameplayStyles.targeted)
-      selection.children[0].children[1].classList.add(GameplayStyles.targeted)
-      selection.children[0].children[0].children[0].innerHTML = "";
-  
-      if (GameState.Players[player].CurrentRemainingCorrect === 0)
+      if (selection.children[0].children[0].children[0].innerHTML != "")
       {
-        GameState.Players[player].CompletedPrompts++;
-
-        if (GameState.Players[player].PerfectSpread === true)
+        GameState.Players[player].SelectedCount++;
+  
+        if (GameState.OnDeck[GameState.Players[player].CurrentDeckIndex]
+            .IsValidAnswer(selection.children[0].children[0].children[0].innerHTML))
         {
-          IncrementScore(player, 1000);
+          PlayEffect(AudioEffects.Correct);
+          GameState.Players[player].CorrectCount++;
+          IncrementScore(player, 100);
+          GameState.Players[player].CurrentRemainingCorrect--;
         }
-        if (GameState.Players[player].OnDeckCount === 0)
+        else
         {
-          ScreenChange(GameConstants.CurrentScreen.Gameover);
-          return;
+          PlayEffect(AudioEffects.Incorrect);
+          if (gameMode === GameConstants.GameMode.Survival) {
+            if (GameState.Players[player].Lives === 0) {
+              ScreenChange(GameConstants.CurrentScreen.Gameover);
+              return;
+            }
+            decrementLives(player);
+          }
+          setPlayerTimeout(player);
         }
-        flipSpread(getPlayerGame(player).children[player].children[1], false, true);
 
-        setTimeout(function() { IncrementSpread(player); }, 1000);
+        selection.children[0].classList.add(GameplayStyles.flipped);
+        selection.children[0].children[0].classList.remove(GameplayStyles.targeted)
+        selection.children[0].children[1].classList.add(GameplayStyles.targeted)
+        selection.children[0].children[0].children[0].innerHTML = "";
+
+        if (GameState.Players[player].CurrentRemainingCorrect === 0)
+        {
+          GameState.Players[player].CompletedPrompts++;
+  
+          if (GameState.Players[player].PerfectSpread === true)
+          {
+            IncrementScore(player, 1000);
+          }
+
+          if (gameMode === GameConstants.GameMode.TwoPlayer) {
+            if (GameState.Players[player].OnDeckCount === 0)
+            {
+              ScreenChange(GameConstants.CurrentScreen.Gameover);
+              return;
+            }
+          }
+
+          GameState.Players[player].TimedOut = true;
+          setTimeout(function() { endPlayerTimeout(player); }, 2500);
+          flipSpread(getPlayerGame(player).children[player].children[1], false, true);
+          setTimeout(function() { IncrementSpread(player, gameMode); }, 1000);
+        }
       }
     }
   }
@@ -350,12 +418,14 @@ const setPlayerTimeout = (player) => {
 }
 
 const endPlayerTimeout = (player) => {
-  let playerTarget = GetGameplayTarget(player);
+  if (GameState.CurrentScreen === GameConstants.CurrentScreen.Gameplay) {
+    let playerTarget = GetGameplayTarget(player);
 
-  playerTarget.children[0].children[1].classList.add(GameplayStyles.targeted);
-  playerTarget.children[0].children[1].classList.remove(GameplayStyles.incorrect);
-
-  GameState.Players[player].TimedOut = false;
+    playerTarget.children[0].children[1].classList.add(GameplayStyles.targeted);
+    playerTarget.children[0].children[1].classList.remove(GameplayStyles.incorrect);
+  
+    GameState.Players[player].TimedOut = false;
+  }
 }
 
 const getPlayerGame = (player) => {
@@ -365,10 +435,14 @@ const getPlayerGame = (player) => {
   );
 }
 
-const IncrementSpread = (player) => {
-  dropOnDeck(player);
-  addOnDeck(player === GameConstants.PlayerOne ? 
-    GameConstants.PlayerTwo : GameConstants.PlayerOne);
+const IncrementSpread = (player, gameMode) => {
+  if (gameMode === GameConstants.GameMode.TwoPlayer) {
+    dropOnDeck(player);
+    addOnDeck(player === GameConstants.PlayerOne ? 
+      GameConstants.PlayerTwo : GameConstants.PlayerOne);
+  } else {
+    addOnDeck(player);
+  }
 
   let playerGame = getPlayerGame(player);
 
