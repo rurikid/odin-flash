@@ -79,10 +79,9 @@ let targetIndices = {
   verticalMax: Object.keys(GameOptions).length + 1,
   horizontal: 0,
   horizontalMin: 0,
-  horizontalMax: 0  // needs to be instantiated and updated on move
+  horizontalMax: 0
 }
 
-// TODO: rename options.Options[option]; ridiculous
 const getGameOptionList = (options) => {
   let container = document.createElement('div');
   container.className = "flex-center flex-column";
@@ -106,8 +105,6 @@ const getGameOptionList = (options) => {
 
     // TODO: This is acting wonky with Difficulty key
     if (GameState.GameOptions[options.StateKey].length > 0) {
-      // console.log(options.StateKey);
-      // console.log(GameState.GameOptions[options.StateKey]);
       if (GameState.GameOptions[options.StateKey].includes(options.Values[option])) {
         listItem.className = "selected";
       }

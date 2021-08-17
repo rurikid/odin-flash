@@ -27,14 +27,13 @@ const MainMenuOptions = {
   }
 }
 
-// TODO: Keep <h1>Odin Flash</h1> position consistent with Title
 const MainMenuScreen = () => {
   targetIndex = 0;
 
   let mainMenuScreen = document.createElement("div");
   mainMenuScreen.className = "flex-column flex-center main-menu-screen";
   mainMenuScreen.id = "mainMenuScreen";
-  // TODO: selected should programmatically target the targetIndex h2
+
   mainMenuScreen.innerHTML = `<h1>Odin Flash</h1>`
 
   for (let item in MainMenuOptions) {

@@ -5,7 +5,6 @@ import { PlayEffect, AudioEffects } from "../Audio.js";
 let lockout = true;
 const ContinuePrompt = "continuePrompt";
 
-// TODO: Keep <h1>Odin Flash</h1> position consistent with MainMenu
 const TitleScreen = () => {
   lockout = true;
   setTimeout(function() {

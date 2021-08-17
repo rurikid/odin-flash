@@ -110,7 +110,6 @@ const playerGame = (gameMode, onDeck, player) => {
   return playerArea;
 }
 
-// TODO: Display controls to player
 const gameSpread = (onDeck, player) => {
   let gameSpread = document.createElement("div");
   gameSpread.className = GameplayStyles.gameSpread;

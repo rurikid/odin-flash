@@ -14,8 +14,6 @@ const ControlConstants = {
   Select: "Select"
 }
 
-// TODO: Consider swapping player one and player two controls
-// TODO: Control sub-functions can be reduced
 const InitControls = () => {
   document.addEventListener('keydown', (e) => {
     switch (GameState.CurrentScreen) {
